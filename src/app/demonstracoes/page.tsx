@@ -12,48 +12,49 @@ const Typewriter = dynamic(() => import("react-typewriter-effect"), {
   ssr: false,
 });
 
+// Vídeos locais da pasta public/downloads/
 const videos = [
   {
     id: 1,
     title: "Demonstração do Kit Corpo Negro",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-    youtubeId: "dQw4w9WgXcQ",
+    thumbnail: "/downloads/im.jpg", // Thumbnail local
+    videoUrl: "/downloads/video.mp4", // Vídeo local
     duration: "3:45",
   },
   {
     id: 2,
     title: "Demonstração do Kit Fotoeletrico",
-    thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg",
-    youtubeId: "9bZkp7q19f0",
+    thumbnail: "/downloads/im.jpg", // Thumbnail local
+    videoUrl: "/downloads/video.mp4", // Vídeo local
     duration: "5:12",
   },
   {
     id: 3,
     title: "Tutorial de Montagem",
-    thumbnail: "https://img.youtube.com/vi/JN3KPFarEvM/hqdefault.jpg",
-    youtubeId: "JN3KPFarEvM",
+    thumbnail: "/downloads/im.jpg", // Thumbnail local
+    videoUrl: "/downloads/video.mp4", // Vídeo local
     duration: "4:30",
   },
   {
     id: 4,
     title: "Demonstração Completa",
-    thumbnail: "https://img.youtube.com/vi/M7lc1UVf-VE/hqdefault.jpg",
-    youtubeId: "M7lc1UVf-VE",
+    thumbnail: "/downloads/im.jpg", // Thumbnail local
+    videoUrl: "/downloads/video.mp4", // Vídeo local
     duration: "6:20",
   },
 ];
 
 const DemosSection = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   useEffect(() => {
     // Simulate loading
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
 
-  const playVideo = (youtubeId: any) => {
-    setSelectedVideo(youtubeId);
+  const playVideo = (videoUrl: string) => {
+    setSelectedVideo(videoUrl);
   };
 
   const closeModal = () => {
@@ -66,7 +67,7 @@ const DemosSection = () => {
     hover: { scale: 1.05, transition: { duration: 0.3 } },
   };
 
-  const router = useRouter(); // Inicialize o router
+  const router = useRouter();
 
   return (
     <section
@@ -99,7 +100,7 @@ const DemosSection = () => {
             <Typewriter
               text="Demonstrações "
               typeSpeed={50}
-              cursorColor="#a855f7" // Cor roxa para combinar com o gradiente
+              cursorColor="#a855f7"
               hideCursorAfterText={true}
               textStyle={{
                 background: "linear-gradient(to right, #60a5fa, #a855f7)",
@@ -146,10 +147,15 @@ const DemosSection = () => {
                         alt={`Thumbnail de ${video.title}`}
                         className="w-full h-48 object-cover"
                         loading="lazy"
+                        onError={(e) => {
+                          // Fallback para thumbnail caso não exista
+                          (e.target as HTMLImageElement).src =
+                            "/placeholder-thumbnail.jpg";
+                        }}
                       />
                       <div
                         className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                        onClick={() => playVideo(video.youtubeId)}
+                        onClick={() => playVideo(video.videoUrl)}
                         aria-label={`Reproduzir ${video.title}`}
                       >
                         <div className="bg-red-600 p-4 rounded-full hover:bg-red-700 transition-colors">
@@ -159,25 +165,13 @@ const DemosSection = () => {
                       <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                         {video.duration}
                       </div>
-                      <div className="absolute top-2 right-2">
-                        <a
-                          href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-black/70 p-2 rounded-full text-white hover:bg-black/90 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                          aria-label={`Abrir ${video.title} no YouTube`}
-                        >
-                          <ExternalLink size={16} />
-                        </a>
-                      </div>
                     </div>
                     <div className="p-4">
                       <h3 className="text-white font-semibold text-lg mb-2">
                         {video.title}
                       </h3>
                       <button
-                        onClick={() => playVideo(video.youtubeId)}
+                        onClick={() => playVideo(video.videoUrl)}
                         className="text-blue-400 hover:text-blue-300 text-sm flex items-center space-x-1 transition-colors"
                       >
                         <Play size={14} />
@@ -198,14 +192,14 @@ const DemosSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
               onClick={closeModal}
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
-                className="relative w-full max-w-4xl"
+                className="relative w-full max-w-4xl bg-slate-900 rounded-xl overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -228,14 +222,15 @@ const DemosSection = () => {
                   </svg>
                 </button>
                 <div className="relative aspect-video">
-                  <iframe
-                    className="w-full h-full rounded-xl"
-                    src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
-                    title="Video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <video
+                    className="w-full h-full"
+                    src={selectedVideo}
+                    controls
+                    autoPlay
+                    aria-label="Video player"
+                  >
+                    Seu navegador não suporta o elemento de vídeo.
+                  </video>
                 </div>
               </motion.div>
             </motion.div>

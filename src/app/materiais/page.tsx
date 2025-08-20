@@ -26,7 +26,7 @@ const materials = [
     type: "PDF",
     size: "2.5 MB",
     icon: FileText,
-    url: "#",
+    url: "/downloads/corpo-negro.pdf",
     category: "Professor",
   },
   {
@@ -35,7 +35,7 @@ const materials = [
     type: "PDF",
     size: "1.8 MB",
     icon: BookOpen,
-    url: "#",
+    url: "/downloads/corpo-negro.pdf",
     category: "Estudante",
   },
   {
@@ -44,7 +44,7 @@ const materials = [
     type: "MP4",
     size: "45 MB",
     icon: Video,
-    url: "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+    url: "/downloads/video.mp4", // Alterado para vídeo local
     category: "Professor",
   },
 ];
@@ -53,7 +53,7 @@ const MaterialsSection = () => {
   const [filter, setFilter] = useState("Todos");
   const [filteredMaterials, setFilteredMaterials] = useState(materials);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   useEffect(() => {
     // Simulate loading
@@ -71,7 +71,7 @@ const MaterialsSection = () => {
 
   const filterButtons = ["Todos", "Professor", "Estudante"];
 
-  const playVideo = (url: any) => {
+  const playVideo = (url: string) => {
     setSelectedVideo(url);
   };
 
@@ -84,7 +84,7 @@ const MaterialsSection = () => {
     visible: { opacity: 1, y: 0 },
     hover: { scale: 1.03, transition: { duration: 0.3 } },
   };
-  const router = useRouter(); // Inicialize o router
+  const router = useRouter();
 
   return (
     <section
@@ -116,7 +116,7 @@ const MaterialsSection = () => {
             <Typewriter
               text="Materiais de Apoio"
               typeSpeed={50}
-              cursorColor="#a855f7" // Cor roxa para combinar com o gradiente
+              cursorColor="#a855f7"
               hideCursorAfterText={true}
               textStyle={{
                 background: "linear-gradient(to right, #60a5fa, #a855f7)",
@@ -200,30 +200,11 @@ const MaterialsSection = () => {
                           <a
                             href={material.url}
                             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
-                            aria-label={
-                              material.type === "Link"
-                                ? `Acessar ${material.name}`
-                                : `Baixar ${material.name}`
-                            }
-                            target={
-                              material.type === "Link" ? "_blank" : "_self"
-                            }
-                            rel={
-                              material.type === "Link"
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
+                            aria-label={`Baixar ${material.name}`}
+                            download
                           >
-                            {material.type === "Link" ? (
-                              <ExternalLink size={16} />
-                            ) : (
-                              <Download size={16} />
-                            )}
-                            <span>
-                              {material.type === "Link"
-                                ? "Acessar"
-                                : "Download"}
-                            </span>
+                            <Download size={16} />
+                            <span>Download</span>
                           </a>
                         )}
                       </div>
@@ -242,14 +223,14 @@ const MaterialsSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
               onClick={closeModal}
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
-                className="relative w-full max-w-4xl"
+                className="relative w-full max-w-4xl bg-slate-900 rounded-xl overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -273,12 +254,14 @@ const MaterialsSection = () => {
                 </button>
                 <div className="relative aspect-video">
                   <video
-                    className="w-full h-full rounded-xl"
+                    className="w-full h-full"
                     src={selectedVideo}
                     controls
                     autoPlay
                     aria-label="Video player"
-                  />
+                  >
+                    Seu navegador não suporta o elemento de vídeo.
+                  </video>
                 </div>
               </motion.div>
             </motion.div>
