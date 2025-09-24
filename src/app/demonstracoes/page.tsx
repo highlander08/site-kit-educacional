@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Play, ExternalLink, ArrowLeft } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { BackToHome } from "@/components/BackToHome";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, Play } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Typewriter = dynamic(() => import("react-typewriter-effect"), {
   ssr: false,
@@ -34,13 +35,6 @@ const videos = [
     thumbnail: "/downloads/im.jpg", // Thumbnail local
     videoUrl: "/downloads/video.mp4", // Vídeo local
     duration: "4:30",
-  },
-  {
-    id: 4,
-    title: "Demonstração Completa",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
-    duration: "6:20",
   },
 ];
 
@@ -75,14 +69,15 @@ const DemosSection = () => {
       className="py-20 px-4 bg-gradient-to-b from-slate-900 to-slate-800 relative"
     >
       <div className="absolute top-6 left-6 z-10">
-        <button
+        {/* <button
           onClick={() => router.push("/")}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           aria-label="Voltar para página inicial"
         >
           <ArrowLeft className="w-4 h-4" />
           Página Inicial
-        </button>
+        </button> */}
+        <BackToHome />
       </div>
 
       <div className="container mx-auto max-w-7xl">

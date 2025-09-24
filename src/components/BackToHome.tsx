@@ -17,7 +17,7 @@ export function BackToHome({
   const router = useRouter();
 
   const baseStyles =
-    "inline-flex items-center gap-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2";
+    "inline-flex items-center gap-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer";
 
   const variantStyles = {
     primary: "bg-indigo-600 text-white hover:bg-indigo-700",

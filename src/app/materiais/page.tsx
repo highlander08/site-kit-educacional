@@ -1,18 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { BackToHome } from "@/components/BackToHome";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowLeft,
-  BookOpen,
-  Download,
-  ExternalLink,
-  FileText,
-  Video,
-} from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowLeft, BookOpen, Download, FileText, Video } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Typewriter = dynamic(() => import("react-typewriter-effect"), {
   ssr: false,
@@ -22,7 +16,7 @@ const Typewriter = dynamic(() => import("react-typewriter-effect"), {
 const materials = [
   {
     id: 1,
-    name: "Guia do Professor",
+    name: "Guia do Professor: Andamento",
     type: "PDF",
     size: "2.5 MB",
     icon: FileText,
@@ -31,7 +25,7 @@ const materials = [
   },
   {
     id: 2,
-    name: "Guia do Estudante",
+    name: "Guia do Estudante: Andamento",
     type: "PDF",
     size: "1.8 MB",
     icon: BookOpen,
@@ -40,7 +34,7 @@ const materials = [
   },
   {
     id: 3,
-    name: "Vídeo Tutorial",
+    name: "Vídeo Tutorial: Andamento",
     type: "MP4",
     size: "45 MB",
     icon: Video,
@@ -92,14 +86,15 @@ const MaterialsSection = () => {
       className="py-20 px-4 bg-gradient-to-b from-slate-900 to-slate-800 relative"
     >
       <div className="absolute top-6 left-6 z-10">
-        <button
+        {/* <button
           onClick={() => router.push("/")}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           aria-label="Voltar para página inicial"
         >
           <ArrowLeft className="w-4 h-4" />
           Página Inicial
-        </button>
+        </button> */}
+        <BackToHome />
       </div>
       <div className="container mx-auto max-w-7xl">
         {/* Header */}

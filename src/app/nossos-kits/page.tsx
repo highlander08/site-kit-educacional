@@ -1,4 +1,5 @@
 "use client";
+import { BackToHome } from "@/components/BackToHome";
 import {
   ArrowLeft,
   ChevronLeft,
@@ -8,9 +9,9 @@ import {
   Target,
   Zap,
 } from "lucide-react";
-import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const Typewriter = dynamic(() => import("react-typewriter-effect"), {
   ssr: false,
@@ -42,9 +43,7 @@ const KitsSection = () => {
         "Demonstra como objetos aquecidos emitem radiação eletromagnética em diferentes frequências, fundamental para compreender a física quântica.",
       features: [
         "Controle de temperatura digital",
-        "Sensor espectral de alta precisão",
         "Interface gráfica intuitiva",
-        "Software de análise de dados",
         "Materiais didáticos completos",
       ],
       image: "/corpo-negro.png", // Substitua pela imagem real
@@ -111,14 +110,15 @@ const KitsSection = () => {
       className="py-20 px-4 bg-gradient-to-br from-slate-900 to-blue-900 relative"
     >
       <div className="absolute top-6 left-6 z-10">
-        <button
+        {/* <button
           onClick={() => router.push("/")}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           aria-label="Voltar para página inicial"
         >
           <ArrowLeft className="w-4 h-4" />
           Página Inicial
-        </button>
+        </button> */}
+        <BackToHome />
       </div>
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">

@@ -204,7 +204,7 @@ const AboutPage: React.FC = () => {
                 {item.id ? (
                   <button
                     onClick={() => scrollToSection(item.id!)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all cursor-pointer duration-200 ${
                       activeSection === item.id
                         ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
                         : "text-gray-300 hover:bg-slate-700 hover:text-white"
@@ -215,7 +215,7 @@ const AboutPage: React.FC = () => {
                     }
                   >
                     {item.icon}
-                    <span className="font-medium">{item.label}</span>
+                    <span className="font-medium ">{item.label}</span>
                   </button>
                 ) : (
                   <a
@@ -225,7 +225,9 @@ const AboutPage: React.FC = () => {
                     onClick={() => setSidebarOpen(false)}
                   >
                     {item.icon}
-                    <span className="font-medium">{item.label}</span>
+                    <span className="font-medium cursor-pointer">
+                      {item.label}
+                    </span>
                   </a>
                 )}
               </li>
@@ -296,7 +298,7 @@ const AboutPage: React.FC = () => {
                     <button
                       key={item.id}
                       onClick={() => scrollToSection(item.id!)}
-                      className={`transition-colors font-medium ${
+                      className={`transition-colors font-medium cursor-pointer ${
                         activeSection === item.id
                           ? "text-white"
                           : "text-gray-400 hover:text-white"
