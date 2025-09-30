@@ -1,29 +1,28 @@
 "use client";
 
-import React, { useState, useEffect, ReactNode } from "react";
 import {
-  Atom,
-  Users,
-  Target,
-  Mail,
-  Phone,
-  Globe,
   ArrowRight,
-  Zap,
+  Atom,
+  ChevronUp,
+  FileText,
+  Globe,
   Heart,
-  Star,
-  Menu,
-  X,
   Home,
   Info,
-  Package,
-  MessageCircle,
-  ChevronUp,
   Lightbulb,
-  FileText,
+  Mail,
+  MessageCircle,
   Monitor,
+  Package,
+  Phone,
+  Star,
+  Target,
+  X,
+  Zap,
+  Instagram
 } from "lucide-react";
 import dynamic from "next/dynamic";
+import React, { ReactNode, useEffect, useState } from "react";
 
 const Typewriter = dynamic(() => import("react-typewriter-effect"), {
   ssr: false,
@@ -199,39 +198,54 @@ const AboutPage: React.FC = () => {
 
         <nav className="p-6" aria-label="Navegação principal">
           <ul className="space-y-2">
-            {sidebarItems.map((item: SidebarItem) => (
-              <li key={item.id || item.url}>
-                {item.id ? (
-                  <button
-                    onClick={() => scrollToSection(item.id!)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all cursor-pointer duration-200 ${
-                      activeSection === item.id
-                        ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
-                        : "text-gray-300 hover:bg-slate-700 hover:text-white"
-                    }`}
-                    aria-label={`Navegar para ${item.label}`}
-                    aria-current={
-                      activeSection === item.id ? "page" : undefined
-                    }
-                  >
-                    {item.icon}
-                    <span className="font-medium ">{item.label}</span>
-                  </button>
-                ) : (
-                  <a
-                    href={item.url}
-                    className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
-                    aria-label={`Ir para ${item.label}`}
-                    onClick={() => setSidebarOpen(false)}
-                  >
-                    {item.icon}
-                    <span className="font-medium cursor-pointer">
-                      {item.label}
-                    </span>
-                  </a>
-                )}
-              </li>
-            ))}
+            {sidebarItems.map((item: SidebarItem) => {
+              const isHighlighted =
+                item.label === "Início" ||
+                item.label === "Sobre Nós" ||
+                item.label === "Benefícios" ||
+                item.label === "Contato" ||
+                item.label === "Nossos Kits" ||
+                item.label === "Produtos" ||
+                item.label === "Materiais" ||
+                item.label === "Demonstrações";
+
+              return (
+                <li key={item.id || item.url} className="relative group">
+                  {item.id ? (
+                    <button
+                      onClick={() => scrollToSection(item.id!)}
+                      className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer text-gray-300 transition-colors duration-300 relative"
+                      aria-label={`Navegar para ${item.label}`}
+                      aria-current={
+                        activeSection === item.id ? "page" : undefined
+                      }
+                    >
+                      {item.icon}
+                      <span className="font-medium relative">
+                        {item.label}
+                        {isHighlighted && (
+                          <span className="absolute bottom-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300 origin-left" />
+                        )}
+                      </span>
+                    </button>
+                  ) : (
+                    <a
+                      href={item.url}
+                      className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer text-gray-300 transition-colors duration-300 relative group"
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      {item.icon}
+                      <span className="font-medium relative">
+                        {item.label}
+                        {isHighlighted && (
+                          <span className="absolute bottom-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300 origin-left" />
+                        )}
+                      </span>
+                    </a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </aside>
@@ -268,7 +282,7 @@ const AboutPage: React.FC = () => {
       {/* Main Content */}
       <main className="lg:ml-64 transition-all duration-300">
         {/* Header */}
-        <header className="bg-slate-900/90 backdrop-blur-sm fixed  top-0 right-0 left-0 z-40 border-b border-slate-700">
+        {/* <header className="bg-slate-900/90 backdrop-blur-sm fixed  top-0 right-0 left-0 z-40 border-b border-slate-700">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4">
               <button
@@ -313,10 +327,10 @@ const AboutPage: React.FC = () => {
               </nav>
             </div>
           </div>
-        </header>
+        </header> */}
 
         {/* Hero Section */}
-        <section
+        {/* <section
           id="hero"
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
           aria-labelledby="hero-heading"
@@ -370,10 +384,80 @@ const AboutPage: React.FC = () => {
               </a>
             </div>
           </div>
+        </section> */}
+        <section
+          id="hero"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          aria-labelledby="hero-heading"
+        >
+          {/* Background Image with Harvard-style Overlay and Opacity */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url('/ft.jpg'), linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(79, 70, 229, 0.1))`, // Gradiente escuro como na Harvard para contraste
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              opacity: 0.2, // Baixa opacidade para "apagar" a imagem, como no site da Harvard
+              filter: "blur(1px)", // Blur sutil para suavizar, evitando distração
+            }}
+          ></div>
+
+          {/* Overlay adicional para mais contraste no texto, se necessário */}
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/20 to-purple-900/20"></div>
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div
+              className={`transition-all duration-1000 ${
+                isVisible.hero
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
+              }`}
+            >
+              <div className="mb-8 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <img
+                  src="/LogoFotoQuantum_branco.png"
+                  alt="Logo Fotoquantum"
+                  className="mx-auto h-20 w-auto relative z-10"
+                />
+              </div>
+              <h1
+                id="hero-heading"
+                className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
+              >
+                <Typewriter
+                  text="Explore a Física Quântica"
+                  typeSpeed={50}
+                  cursorColor="#a855f7" // Cor roxa para combinar com o gradiente
+                  hideCursorAfterText={true}
+                  textStyle={{
+                    background: "linear-gradient(to right, #60a5fa, #a855f7)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                    display: "inline-block",
+                  }}
+                />
+              </h1>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+                Kits educacionais revolucionários que tornam os fenômenos
+                quânticos tangíveis e compreensíveis para estudantes e
+                professores.
+              </p>
+              <a
+                href="/nossos-kits"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl inline-block"
+                aria-label="Ver nossos kits"
+              >
+                Descobrir Kits
+              </a>
+            </div>
+          </div>
         </section>
 
         {/* Company Introduction */}
-        <section
+        {/* <section
           id="intro"
           className="py-20 bg-slate-800/30"
           aria-labelledby="intro-heading"
@@ -425,6 +509,76 @@ const AboutPage: React.FC = () => {
                     aproximar a teoria da prática, despertamos o interesse e
                     promovemos um aprendizado mais eficiente e duradouro.
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> */}
+        <section
+          id="intro"
+          className="relative py-20 bg-slate-800/30"
+          aria-labelledby="intro-heading"
+        >
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div
+                className={`transition-all duration-1000 delay-200 ${
+                  isVisible.intro
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-10"
+                }`}
+              >
+                <h2
+                  id="intro-heading"
+                  className="text-4xl font-bold text-white mb-6"
+                >
+                  Apresentação da Empresa
+                </h2>
+                <p className="text-lg text-gray-300 leading-relaxed mb-8">
+                  Somos uma empresa dedicada à criação de{" "}
+                  <strong className="text-blue-400">
+                    kits educacionais interativos voltados para o ensino de
+                    Física
+                  </strong>
+                  , com foco em tornar o aprendizado mais acessível, prático e
+                  significativo para estudantes do ensino fundamental e médio.
+                </p>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Desenvolvemos soluções que transformam conceitos abstratos em
+                  experiências visuais e táteis, facilitando a compreensão por
+                  meio da experimentação.
+                </p>
+              </div>
+              <div
+                className={`transition-all duration-1000 delay-400 ${
+                  isVisible.intro
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 translate-x-10"
+                }`}
+              >
+                <div
+                  className="relative p-8 rounded-3xl text-white"
+                  style={{
+                    backgroundImage: `url('/pk.jpg'), linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(79, 70, 229, 0.1))`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    opacity: 1, // Opacidade total para a div, controlada pelo overlay
+                  }}
+                >
+                  {/* Overlay para contraste */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/80 to-purple-600/80 rounded-3xl"></div>
+                  <div className="relative z-10">
+                    <Atom className="w-16 h-16 mb-6 opacity-80" />
+                    <h3 className="text-2xl font-bold mb-4">Nossa Missão</h3>
+                    <p className="text-lg leading-relaxed">
+                      <strong>Tornar a Física mais simples e clara</strong>,
+                      desmistificando conteúdos que costumam parecer complexos e
+                      distantes da realidade dos alunos. Acreditamos que, ao
+                      aproximar a teoria da prática, despertamos o interesse e
+                      promovemos um aprendizado mais eficiente e duradouro.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -497,16 +651,16 @@ const AboutPage: React.FC = () => {
                 elaborar um orçamento personalizado.
               </p>
 
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
                 <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
-                  <Mail className="w-8 h-8 mx-auto mb-4" />
-                  <p className="font-medium mb-2">Email</p>
+                  <Instagram className="w-8 h-8 mx-auto mb-4" />
+                  <p className="font-medium mb-2">Instagram</p>
                   <a
-                    href="mailto:contato@Fotoquantum.com.br"
+                    href="https://www.instagram.com/fotoquantumkits/"
                     className="text-indigo-100 hover:underline"
-                    aria-label="Enviar email para contato@Fotoquantum.com.br"
+                    aria-label="Enviar mensagem para  contato@Fotoquantum.com.br"
                   >
-                    contato@Fotoquantum.com.br
+                    fotoquantumkits
                   </a>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
@@ -520,7 +674,7 @@ const AboutPage: React.FC = () => {
                     (85) 98437-2867
                   </a>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
+                {/* <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
                   <Globe className="w-8 h-8 mx-auto mb-4" />
                   <p className="font-medium mb-2">Website</p>
                   <a
@@ -532,7 +686,7 @@ const AboutPage: React.FC = () => {
                   >
                     www.fotoquantum.com.br
                   </a>
-                </div>
+                </div> */}
               </div>
 
               <button

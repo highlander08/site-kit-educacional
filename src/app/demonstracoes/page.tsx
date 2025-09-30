@@ -18,23 +18,9 @@ const videos = [
   {
     id: 1,
     title: "Demonstração do Kit Corpo Negro",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
+    thumbnail: "/cp.jpeg", // Thumbnail local
+    videoUrl: "corpo-negro.mp4", // Vídeo local
     duration: "3:45",
-  },
-  {
-    id: 2,
-    title: "Demonstração do Kit Fotoeletrico",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
-    duration: "5:12",
-  },
-  {
-    id: 3,
-    title: "Tutorial de Montagem",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
-    duration: "4:30",
   },
 ];
 
@@ -140,7 +126,7 @@ const DemosSection = () => {
                       <img
                         src={video.thumbnail}
                         alt={`Thumbnail de ${video.title}`}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-110 object-cover"
                         loading="lazy"
                         onError={(e) => {
                           // Fallback para thumbnail caso não exista
