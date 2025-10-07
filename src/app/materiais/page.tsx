@@ -32,15 +32,6 @@ const materials = [
     url: "/downloads/corpo-negro.pdf",
     category: "Estudante",
   },
-  {
-    id: 3,
-    name: "Vídeo Tutorial: Andamento",
-    type: "MP4",
-    size: "45 MB",
-    icon: Video,
-    url: "/downloads/video.mp4", // Alterado para vídeo local
-    category: "Professor",
-  },
 ];
 
 const MaterialsSection = () => {

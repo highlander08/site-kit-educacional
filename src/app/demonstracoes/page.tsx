@@ -126,7 +126,7 @@ const DemosSection = () => {
                       <img
                         src={video.thumbnail}
                         alt={`Thumbnail de ${video.title}`}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-110 object-cover"
                         loading="lazy"
                         onError={(e) => {
                           // Fallback para thumbnail caso não exista
