@@ -18,23 +18,9 @@ const videos = [
   {
     id: 1,
     title: "Demonstração do Kit Corpo Negro",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
+    thumbnail: "/corpoone1.jpg", // Thumbnail local
+    videoUrl: "/downloads/video-oficial-ap.mp4", // Vídeo local
     duration: "3:45",
-  },
-  {
-    id: 2,
-    title: "Demonstração do Kit Fotoeletrico",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
-    duration: "5:12",
-  },
-  {
-    id: 3,
-    title: "Tutorial de Montagem",
-    thumbnail: "/downloads/im.jpg", // Thumbnail local
-    videoUrl: "/downloads/video.mp4", // Vídeo local
-    duration: "4:30",
   },
 ];
 
