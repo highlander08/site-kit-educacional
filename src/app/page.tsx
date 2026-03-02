@@ -19,7 +19,7 @@ import {
   Target,
   X,
   Zap,
-  Instagram
+  Instagram,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -159,14 +159,6 @@ const AboutPage: React.FC = () => {
     setSidebarOpen(false);
   };
 
-  const openWhatsApp = (): void => {
-    try {
-      window.open("https://wa.me/85984372867", "_blank", "noopener,noreferrer");
-    } catch (error) {
-      console.error("Erro ao abrir WhatsApp:", error);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-x-hidden">
       {/* Sidebar */}
@@ -259,15 +251,6 @@ const AboutPage: React.FC = () => {
         />
       )}
 
-      {/* WhatsApp Floating Button */}
-      <button
-        className="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110"
-        onClick={openWhatsApp}
-        aria-label="Entrar em contato via WhatsApp"
-      >
-        <MessageCircle size={32} />
-      </button>
-
       {/* Scroll to Top Button */}
       <button
         className={`fixed bottom-24 right-8 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 mb-2 ${
@@ -281,110 +264,7 @@ const AboutPage: React.FC = () => {
 
       {/* Main Content */}
       <main className="lg:ml-64 transition-all duration-300">
-        {/* Header */}
-        {/* <header className="bg-slate-900/90 backdrop-blur-sm fixed  top-0 right-0 left-0 z-40 border-b border-slate-700">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4">
-              <button
-                onClick={handleSidebarToggle}
-                className="lg:hidden p-2 hover:bg-slate-700 rounded-lg transition-colors"
-                aria-label="Abrir menu"
-              >
-                <Menu className="w-6 h-6" />
-              </button>
-
-              <div className="lg:hidden flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-xl">
-                  <Atom className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  Fotoquantum
-                </span>
-              </div>
-
-              <nav
-                className="hidden md:flex space-x-8 ml-auto"
-                aria-label="Navegação secundária"
-              >
-                {sidebarItems
-                  .filter((item) => item.id)
-                  .map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id!)}
-                      className={`transition-colors font-medium cursor-pointer ${
-                        activeSection === item.id
-                          ? "text-white"
-                          : "text-gray-400 hover:text-white"
-                      }`}
-                      aria-current={
-                        activeSection === item.id ? "page" : undefined
-                      }
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-              </nav>
-            </div>
-          </div>
-        </header> */}
-
         {/* Hero Section */}
-        {/* <section
-          id="hero"
-          className="relative min-h-screen flex items-center justify-center overflow-hidden"
-          aria-labelledby="hero-heading"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10"></div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div
-              className={`transition-all duration-1000 ${
-                isVisible.hero
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
-            >
-              <div className="mb-8 relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                <img
-                  src="/LogoFotoQuantum_branco.png"
-                  alt="Logo Fotoquantum"
-                  className="mx-auto h-20 w-auto relative z-10"
-                />
-              </div>
-              <h1
-                id="hero-heading"
-                className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-              >
-                <Typewriter
-                  text="Explore a Física Quântica"
-                  typeSpeed={50}
-                  cursorColor="#a855f7" // Cor roxa para combinar com o gradiente
-                  hideCursorAfterText={true}
-                  textStyle={{
-                    background: "linear-gradient(to right, #60a5fa, #a855f7)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                    display: "inline-block",
-                  }}
-                />
-              </h1>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
-                Kits educacionais revolucionários que tornam os fenômenos
-                quânticos tangíveis e compreensíveis para estudantes e
-                professores.
-              </p>
-              <a
-                href="/nossos-kits"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl inline-block"
-                aria-label="Ver nossos kits"
-              >
-                Descobrir Kits
-              </a>
-            </div>
-          </div>
-        </section> */}
         <section
           id="hero"
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
@@ -394,16 +274,15 @@ const AboutPage: React.FC = () => {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url('/ft.jpg'), linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(79, 70, 229, 0.1))`, // Gradiente escuro como na Harvard para contraste
+              backgroundImage: `url('/ft.jpg'), linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(79, 70, 229, 0.1))`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              opacity: 0.2, // Baixa opacidade para "apagar" a imagem, como no site da Harvard
-              filter: "blur(1px)", // Blur sutil para suavizar, evitando distração
+              opacity: 0.2,
+              filter: "blur(1px)",
             }}
           ></div>
 
-          {/* Overlay adicional para mais contraste no texto, se necessário */}
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/20 to-purple-900/20"></div>
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -429,7 +308,7 @@ const AboutPage: React.FC = () => {
                 <Typewriter
                   text="Explore a Física Quântica"
                   typeSpeed={50}
-                  cursorColor="#a855f7" // Cor roxa para combinar com o gradiente
+                  cursorColor="#a855f7"
                   hideCursorAfterText={true}
                   textStyle={{
                     background: "linear-gradient(to right, #60a5fa, #a855f7)",
@@ -457,63 +336,6 @@ const AboutPage: React.FC = () => {
         </section>
 
         {/* Company Introduction */}
-        {/* <section
-          id="intro"
-          className="py-20 bg-slate-800/30"
-          aria-labelledby="intro-heading"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div
-                className={`transition-all duration-1000 delay-200 ${
-                  isVisible.intro
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 -translate-x-10"
-                }`}
-              >
-                <h2
-                  id="intro-heading"
-                  className="text-4xl font-bold text-white mb-6"
-                >
-                  Apresentação da Empresa
-                </h2>
-                <p className="text-lg text-gray-300 leading-relaxed mb-8">
-                  Somos uma empresa dedicada à criação de{" "}
-                  <strong className="text-blue-400">
-                    kits educacionais interativos voltados para o ensino de
-                    Física
-                  </strong>
-                  , com foco em tornar o aprendizado mais acessível, prático e
-                  significativo para estudantes do ensino fundamental e médio.
-                </p>
-                <p className="text-lg text-gray-300 leading-relaxed">
-                  Desenvolvemos soluções que transformam conceitos abstratos em
-                  experiências visuais e táteis, facilitando a compreensão por
-                  meio da experimentação.
-                </p>
-              </div>
-              <div
-                className={`transition-all duration-1000 delay-400 ${
-                  isVisible.intro
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-10"
-                }`}
-              >
-                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-8 rounded-3xl text-white">
-                  <Atom className="w-16 h-16 mb-6 opacity-80" />
-                  <h3 className="text-2xl font-bold mb-4">Nossa Missão</h3>
-                  <p className="text-lg leading-relaxed">
-                    <strong>Tornar a Física mais simples e clara</strong>,
-                    desmistificando conteúdos que costumam parecer complexos e
-                    distantes da realidade dos alunos. Acreditamos que, ao
-                    aproximar a teoria da prática, despertamos o interesse e
-                    promovemos um aprendizado mais eficiente e duradouro.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
         <section
           id="intro"
           className="relative py-20 bg-slate-800/30"
@@ -563,10 +385,9 @@ const AboutPage: React.FC = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
-                    opacity: 1, // Opacidade total para a div, controlada pelo overlay
+                    opacity: 1,
                   }}
                 >
-                  {/* Overlay para contraste */}
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/80 to-purple-600/80 rounded-3xl"></div>
                   <div className="relative z-10">
                     <Atom className="w-16 h-16 mb-6 opacity-80" />
@@ -671,22 +492,9 @@ const AboutPage: React.FC = () => {
                     className="text-indigo-100 hover:underline"
                     aria-label="Ligar para (85) 98437-2867"
                   >
-                    (85) 98437-2867
+                    (85) 98807-2122
                   </a>
                 </div>
-                {/* <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
-                  <Globe className="w-8 h-8 mx-auto mb-4" />
-                  <p className="font-medium mb-2">Website</p>
-                  <a
-                    href="https://www.fotoquantum.com.br"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-100 hover:underline"
-                    aria-label="Visitar www.fotoquantum.com.br"
-                  >
-                    www.fotoquantum.com.br
-                  </a>
-                </div> */}
               </div>
 
               <button
