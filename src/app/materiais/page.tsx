@@ -76,7 +76,7 @@ const temasData = {
         titulo: "Guia do Professor - Salto Quântico",
         descricao:
           "Guia do professor para o tema Salto Quântico. Explicações sobre níveis de energia.",
-        url: "/downloads/guia-professor-salto-quantico.pdf",
+        url: "/Salto_Quântico.pdf",
         tamanho: "2.4 MB",
       },
       video: {
@@ -96,7 +96,7 @@ const temasData = {
         titulo: "Material do Aluno - Salto Quântico",
         descricao:
           "Apostila completa com teoria dos níveis de energia, exercícios e aplicações",
-        url: "/downloads/material-aluno-salto-quantico.pdf",
+        url: "/Salto_Quântico_Aluno.pdf",
         tamanho: "1.3 MB",
       },
     },
@@ -136,7 +136,7 @@ const temasData = {
         titulo: "Material do Aluno - Efeito Fotoelétrico",
         descricao:
           "Apostila completa com teoria quântica da luz, exercícios e experimentos",
-        url: "Fotoelétrico_Aluno.pdf",
+        url: "/Fotoelétrico_Aluno.pdf",
         tamanho: "1.4 MB",
       },
     },
@@ -201,7 +201,7 @@ const TeacherSupportPage = () => {
         >
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
             <Typewriter
-              text="Apoio ao Professor – Física Quântica"
+              text="Material de Apoio"
               typeSpeed={40}
               cursorColor="#6366f1"
               hideCursorAfterText={true}
