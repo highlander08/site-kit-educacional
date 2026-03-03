@@ -163,7 +163,15 @@ const KitsSection = () => {
             <Typewriter
               text="Nossos Kits Educacionais"
               typeSpeed={50}
-              hideCursorAfterText
+              cursorColor="#a855f7"
+              hideCursorAfterText={true}
+              textStyle={{
+                background: "linear-gradient(to right, #60a5fa, #a855f7)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+                display: "inline-block",
+              }}
             />
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
