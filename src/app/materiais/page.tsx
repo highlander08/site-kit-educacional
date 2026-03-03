@@ -13,6 +13,9 @@ import {
   Atom,
   Zap,
   Sun,
+  Cat,
+  Split,
+  ExternalLink,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -145,6 +148,44 @@ const temasData = {
 
 // Lista de temas para os botões
 const temasLista = Object.values(temasData);
+
+// Dados para as simulações interativas
+const simulacoes = [
+  {
+    id: "saltoQuantico",
+    nome: "Salto Quântico",
+    descricao: "Explore as transições eletrônicas e a quantização da energia.",
+    url: "https://s-ruddy-five.vercel.app/",
+    cor: "bg-purple-500",
+    corHover: "hover:bg-purple-600",
+    corLight: "bg-purple-100",
+    corTexto: "text-purple-600",
+    icone: Zap,
+  },
+  {
+    id: "gatoSchrodinger",
+    nome: "Gato de Schrödinger",
+    descricao: "Interaja com o paradoxo do gato quântico.",
+    url: "https://gatov2.vercel.app/",
+    cor: "bg-blue-500",
+    corHover: "hover:bg-blue-600",
+    corLight: "bg-blue-100",
+    corTexto: "text-blue-600",
+    icone: Cat,
+  },
+  {
+    id: "duplaFenda",
+    nome: "Dupla Fenda",
+    descricao:
+      "Visualize o experimento da dupla fenda e a interferência quântica.",
+    url: "https://dupla-fenda.vercel.app/",
+    cor: "bg-emerald-500",
+    corHover: "hover:bg-emerald-600",
+    corLight: "bg-emerald-100",
+    corTexto: "text-emerald-600",
+    icone: Split,
+  },
+];
 
 const TeacherSupportPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -499,6 +540,61 @@ const TeacherSupportPage = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Nova Seção: Simulações Interativas */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-16"
+        >
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+            Simulações Interativas
+          </h2>
+          <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto">
+            Acesse diretamente as simulações online para explorar os fenômenos
+            quânticos de forma interativa.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {simulacoes.map((simulacao) => {
+              const Icon = simulacao.icone;
+              return (
+                <motion.a
+                  key={simulacao.id}
+                  href={simulacao.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all block"
+                >
+                  <div className="p-6 flex flex-col items-center text-center">
+                    <div
+                      className={`${simulacao.corLight} w-20 h-20 rounded-2xl flex items-center justify-center mb-4`}
+                    >
+                      <Icon className={`w-10 h-10 ${simulacao.corTexto}`} />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      {simulacao.nome}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4">
+                      {simulacao.descricao}
+                    </p>
+                    <span
+                      className={`inline-flex items-center gap-2 ${simulacao.cor} text-white font-medium py-2 px-4 rounded-full transition-colors ${simulacao.corHover}`}
+                    >
+                      <ExternalLink size={16} />
+                      Acessar Simulação
+                    </span>
+                  </div>
+                </motion.a>
+              );
+            })}
+          </div>
+        </motion.div>
 
         {/* Informações adicionais */}
         <motion.div

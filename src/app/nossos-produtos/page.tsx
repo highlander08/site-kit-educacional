@@ -1,544 +1,56 @@
-// // "use client";
-
-// // import { BackToHome } from "@/components/BackToHome";
-// // import { AnimatePresence, motion } from "framer-motion";
-// // import { ArrowLeft } from "lucide-react";
-// // import dynamic from "next/dynamic";
-// // import Head from "next/head";
-// // import { useRouter } from "next/navigation";
-// // import { useState } from "react";
-
-// // const Typewriter = dynamic(() => import("react-typewriter-effect"), {
-// //   ssr: false,
-// // });
-
-// // interface Product {
-// //   id: string;
-// //   title: string;
-// //   description: string;
-// //   features: string[];
-// //   price?: string;
-// //   image: string;
-// //   icon: React.ReactNode;
-// //   category: string;
-// //   popular?: boolean;
-// // }
-
-// // const ProductsPage = () => {
-// //   const [activeCategory, setActiveCategory] = useState<string>("all");
-// //   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-// //   // Produtos ajustados às categorias solicitadas
-// //   const products: Product[] = [
-// //     {
-// //       id: "2",
-// //       title: "Kit Educacional: Corpo Negro",
-// //       description:
-// //         "Conjunto para estudo prático e visual do fenômeno do Corpo Negro.",
-// //       features: [
-// //         "Exploração prática da radiação de corpo negro",
-// //         "Visualização da relação entre temperatura e cor",
-// //         "Contexto histórico e aplicações na Física Moderna",
-// //         "Experimentos interativos para sala de aula",
-// //         "Material didático adaptado para até 30 alunos",
-// //         "Atividades avaliativas e desafios de aprendizagem",
-// //       ],
-// //       price: "R$ 1.299,90",
-// //       image: "corpo-negro.png",
-// //       icon: <LightningIcon />,
-// //       category: "projetos",
-// //     },
-// //     {
-// //       id: "4",
-// //       title: "Treinamento de Professores",
-// //       description: "Capacitação no uso dos kits experimentais em sala de aula",
-// //       features: [
-// //         "16 horas de formação",
-// //         "Presencial ou remoto",
-// //         "Certificado válido",
-// //         "Material de apoio",
-// //         "Demonstrações práticas",
-// //       ],
-// //       price: "R$ 1.799,90",
-// //       image: "corpo-negro.png",
-// //       icon: <TrainingIcon />,
-// //       category: "treinamentos",
-// //       popular: true,
-// //     },
-// //     {
-// //       id: "5",
-// //       title: "Coleção de Materiais Didáticos",
-// //       description: "Conteúdo complementar com linguagem acessível para alunos",
-// //       features: [
-// //         "5 volumes impressos",
-// //         "Atividades de aprendizagem ativa",
-// //         "Problemas contextualizados",
-// //         "Resolução comentada",
-// //         "Acesso à versão digital",
-// //       ],
-// //       price: "R$ 349,90",
-// //       image: "corpo-negro.png",
-// //       icon: <BookIcon />,
-// //       category: "material",
-// //     },
-// //     {
-// //       id: "6",
-// //       title: "KIt Educacional: Óptica Moderna",
-// //       description:
-// //         "Investigação dos fenômenos ópticos com abordagem contemporânea",
-// //       features: [
-// //         "6 experimentos com lasers",
-// //         "Aplicações tecnológicas",
-// //         "Roteiros de investigação",
-// //         "Material para demonstrações",
-// //         "Sugestões de avaliação",
-// //       ],
-// //       price: "R$ 1.099,90",
-// //       image: "corpo-negro.png",
-// //       icon: <LightIcon />,
-// //       category: "projetos",
-// //     },
-// //   ];
-
-// //   const categories = [
-// //     { id: "all", name: "Todos" },
-// //     { id: "projetos", name: "Kits Educacionais" },
-// //     { id: "treinamentos", name: "Treinamentos" },
-// //     { id: "material", name: "Material Didático" },
-// //   ];
-
-// //   const filteredProducts =
-// //     activeCategory === "all"
-// //       ? products
-// //       : products.filter((product) => product.category === activeCategory);
-
-// //   const router = useRouter();
-// //   return (
-// //     <>
-// //       <Head>
-// //         <title>Nossos Produtos | Física Interativa</title>
-// //         <meta
-// //           name="description"
-// //           content="Soluções para ensino de física com Kits Educacionais, treinamentos e materiais didáticos"
-// //         />
-// //       </Head>
-
-// //       <section className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 py-20">
-// //         <div className="absolute top-6 left-6 z-10">
-// //           {/* <button
-// //             onClick={() => router.push("/")}
-// //             className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-// //             aria-label="Voltar para página inicial"
-// //           >
-// //             <ArrowLeft className="w-4 h-4" />
-// //             Página Inicial
-// //           </button> */}
-// //           <BackToHome />
-// //         </div>
-// //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-// //           {/* Cabeçalho */}
-// //           <motion.div
-// //             initial={{ opacity: 0, y: 20 }}
-// //             animate={{ opacity: 1, y: 0 }}
-// //             transition={{ duration: 0.6 }}
-// //             className="text-center mb-16"
-// //           >
-// //             <h2
-// //               id="hero-heading"
-// //               className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-// //             >
-// //               <Typewriter
-// //                 text="Nossas Soluções"
-// //                 typeSpeed={50}
-// //                 cursorColor="#a855f7" // Cor roxa para combinar com o gradiente
-// //                 hideCursorAfterText={true}
-// //                 textStyle={{
-// //                   background: "linear-gradient(to right, #60a5fa, #a855f7)",
-// //                   WebkitBackgroundClip: "text",
-// //                   backgroundClip: "text",
-// //                   color: "transparent",
-// //                   display: "inline-block",
-// //                 }}
-// //               />
-// //             </h2>
-// //             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-// //               Conheça nossos produtos desenvolvidos para transformar o ensino de
-// //               Física
-// //             </p>
-// //           </motion.div>
-
-// //           {/* Filtros por categoria */}
-// //           <motion.div
-// //             className="flex flex-wrap justify-center gap-4 mb-12"
-// //             initial={{ opacity: 0 }}
-// //             animate={{ opacity: 1 }}
-// //             transition={{ delay: 0.3 }}
-// //           >
-// //             {categories.map((category) => (
-// //               <button
-// //                 key={category.id}
-// //                 onClick={() => setActiveCategory(category.id)}
-// //                 className={`px-6 py-2 rounded-full font-medium transition-all ${
-// //                   activeCategory === category.id
-// //                     ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-// //                     : "bg-slate-700 text-gray-300 hover:bg-slate-600"
-// //                 }`}
-// //               >
-// //                 {category.name}
-// //               </button>
-// //             ))}
-// //           </motion.div>
-
-// //           {/* Grid de Produtos */}
-// //           <motion.div
-// //             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-// //             layout
-// //           >
-// //             <AnimatePresence>
-// //               {filteredProducts.map((product, index) => (
-// //                 <motion.div
-// //                   key={product.id}
-// //                   layout
-// //                   initial={{ opacity: 0, y: 20 }}
-// //                   animate={{ opacity: 1, y: 0 }}
-// //                   exit={{ opacity: 0, scale: 0.9 }}
-// //                   transition={{ duration: 0.4, delay: index * 0.1 }}
-// //                   className="relative"
-// //                 >
-// //                   <div
-// //                     className="bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-700 hover:border-blue-500/50 h-full flex flex-col cursor-pointer"
-// //                     onClick={() => setSelectedProduct(product)}
-// //                   >
-// //                     {/* {product.popular && (
-// //                       <div className="absolute top-4 right-4 bg-yellow-500 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full z-10">
-// //                         POPULAR
-// //                       </div>
-// //                     )} */}
-
-// //                     <div className="h-48 bg-slate-700 overflow-hidden">
-// //                       <div className="w-full h-full bg-gradient-to-br from-blue-900/30 to-purple-900/20 flex items-center justify-center text-gray-400">
-// //                         <img src={product.image} alt="" />
-// //                       </div>
-// //                     </div>
-
-// //                     <div className="p-6 flex-1 flex flex-col">
-// //                       <div className="flex items-center mb-4">
-// //                         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-12 h-12 rounded-lg flex items-center justify-center text-white mr-4">
-// //                           {product.icon}
-// //                         </div>
-// //                         <h3 className="text-xl font-bold text-white">
-// //                           {product.title}
-// //                         </h3>
-// //                       </div>
-
-// //                       <p className="text-gray-300 mb-4 flex-1">
-// //                         {product.description}
-// //                       </p>
-
-// //                       <div className="mt-auto">
-// //                         {product.price && (
-// //                           <div className="text-2xl font-bold text-white mb-4">
-// //                             {product.price}
-// //                           </div>
-// //                         )}
-
-// //                         <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
-// //                           Saiba Mais
-// //                         </button>
-// //                       </div>
-// //                     </div>
-// //                   </div>
-// //                 </motion.div>
-// //               ))}
-// //             </AnimatePresence>
-// //           </motion.div>
-// //         </div>
-
-// //         {/* Modal de Detalhes do Produto */}
-// //         <AnimatePresence>
-// //           {selectedProduct && (
-// //             <motion.div
-// //               className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
-// //               initial={{ opacity: 0 }}
-// //               animate={{ opacity: 1 }}
-// //               exit={{ opacity: 0 }}
-// //               onClick={() => setSelectedProduct(null)}
-// //             >
-// //               <motion.div
-// //                 className="bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-// //                 initial={{ scale: 0.9, opacity: 0 }}
-// //                 animate={{ scale: 1, opacity: 1 }}
-// //                 exit={{ scale: 0.9, opacity: 0 }}
-// //                 onClick={(e) => e.stopPropagation()}
-// //               >
-// //                 <div className="relative">
-// //                   <button
-// //                     className="absolute top-4 right-4 bg-slate-700/50 hover:bg-slate-700 rounded-full p-2 z-10"
-// //                     onClick={() => setSelectedProduct(null)}
-// //                   >
-// //                     <XIcon />
-// //                   </button>
-
-// //                   <div className="grid md:grid-cols-2">
-// //                     <div className="h-64 md:h-full bg-slate-700 flex items-center justify-center">
-// //                       <div className="w-full h-full bg-gradient-to-br from-blue-900/30 to-purple-900/20 flex items-center justify-center text-gray-400">
-// //                         [Imagem detalhada: {selectedProduct.title}]
-// //                       </div>
-// //                     </div>
-
-// //                     <div className="p-8">
-// //                       <div className="flex items-center mb-6">
-// //                         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-14 h-14 rounded-xl flex items-center justify-center text-white mr-4">
-// //                           {selectedProduct.icon}
-// //                         </div>
-// //                         <h2 className="text-2xl font-bold text-white">
-// //                           {selectedProduct.title}
-// //                         </h2>
-// //                       </div>
-
-// //                       <p className="text-gray-300 mb-6">
-// //                         {selectedProduct.description}
-// //                       </p>
-
-// //                       <div className="mb-8">
-// //                         <h3 className="text-lg font-semibold text-white mb-3">
-// //                           Benefícios Incluídos:
-// //                         </h3>
-// //                         <ul className="space-y-2">
-// //                           {selectedProduct.features.map((feature, index) => (
-// //                             <li
-// //                               key={index}
-// //                               className="flex items-start text-gray-300"
-// //                             >
-// //                               <div className="text-green-500 mr-2 mt-1 flex-shrink-0">
-// //                                 <CheckIcon />
-// //                               </div>
-// //                               <span>{feature}</span>
-// //                             </li>
-// //                           ))}
-// //                         </ul>
-// //                       </div>
-
-// //                       <div className="flex flex-col sm:flex-row gap-4">
-// //                         {selectedProduct.price && (
-// //                           <div className="text-3xl font-bold text-white">
-// //                             {selectedProduct.price}
-// //                           </div>
-// //                         )}
-
-// //                         <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors flex-1">
-// //                           Solicitar Orçamento
-// //                         </button>
-// //                       </div>
-// //                     </div>
-// //                   </div>
-// //                 </div>
-// //               </motion.div>
-// //             </motion.div>
-// //           )}
-// //         </AnimatePresence>
-// //       </section>
-// //     </>
-// //   );
-// // };
-
-// // // Componentes de ícone personalizados
-// // const LightningIcon = () => (
-// //   <svg
-// //     xmlns="http://www.w3.org/2000/svg"
-// //     width="24"
-// //     height="24"
-// //     viewBox="0 0 24 24"
-// //     fill="none"
-// //     stroke="currentColor"
-// //     strokeWidth="2"
-// //     strokeLinecap="round"
-// //     strokeLinejoin="round"
-// //   >
-// //     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-// //   </svg>
-// // );
-
-// // const LightIcon = () => (
-// //   <svg
-// //     xmlns="http://www.w3.org/2000/svg"
-// //     width="24"
-// //     height="24"
-// //     viewBox="0 0 24 24"
-// //     fill="none"
-// //     stroke="currentColor"
-// //     strokeWidth="2"
-// //     strokeLinecap="round"
-// //     strokeLinejoin="round"
-// //   >
-// //     <circle cx="12" cy="12" r="5"></circle>
-// //     <line x1="12" y1="1" x2="12" y2="3"></line>
-// //     <line x1="12" y1="21" x2="12" y2="23"></line>
-// //     <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-// //     <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-// //     <line x1="1" y1="12" x2="3" y2="12"></line>
-// //     <line x1="21" y1="12" x2="23" y2="12"></line>
-// //     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-// //     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-// //   </svg>
-// // );
-
-// // const TrainingIcon = () => (
-// //   <svg
-// //     xmlns="http://www.w3.org/2000/svg"
-// //     width="24"
-// //     height="24"
-// //     viewBox="0 0 24 24"
-// //     fill="none"
-// //     stroke="currentColor"
-// //     strokeWidth="2"
-// //     strokeLinecap="round"
-// //     strokeLinejoin="round"
-// //   >
-// //     <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-// //     <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-// //     <path d="M2 2l7.586 7.586"></path>
-// //     <circle cx="11" cy="11" r="2"></circle>
-// //   </svg>
-// // );
-
-// // const BookIcon = () => (
-// //   <svg
-// //     xmlns="http://www.w3.org/2000/svg"
-// //     width="24"
-// //     height="24"
-// //     viewBox="0 0 24 24"
-// //     fill="none"
-// //     stroke="currentColor"
-// //     strokeWidth="2"
-// //     strokeLinecap="round"
-// //     strokeLinejoin="round"
-// //   >
-// //     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-// //     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-// //   </svg>
-// // );
-
-// // const XIcon = () => (
-// //   <svg
-// //     xmlns="http://www.w3.org/2000/svg"
-// //     width="24"
-// //     height="24"
-// //     viewBox="0 0 24 24"
-// //     fill="none"
-// //     stroke="currentColor"
-// //     strokeWidth="2"
-// //     strokeLinecap="round"
-// //     strokeLinejoin="round"
-// //   >
-// //     <line x1="18" y1="6" x2="6" y2="18"></line>
-// //     <line x1="6" y1="6" x2="18" y2="18"></line>
-// //   </svg>
-// // );
-
-// // const CheckIcon = () => (
-// //   <svg
-// //     xmlns="http://www.w3.org/2000/svg"
-// //     width="20"
-// //     height="20"
-// //     viewBox="0 0 24 24"
-// //     fill="none"
-// //     stroke="currentColor"
-// //     strokeWidth="2"
-// //     strokeLinecap="round"
-// //     strokeLinejoin="round"
-// //   >
-// //     <polyline points="20 6 9 17 4 12"></polyline>
-// //   </svg>
-// // );
-
-// // export default ProductsPage;
 // "use client";
 
 // import { BackToHome } from "@/components/BackToHome";
-// import { AnimatePresence, motion } from "framer-motion";
-// import { ArrowLeft } from "lucide-react";
-// import dynamic from "next/dynamic";
+// import { motion } from "framer-motion";
 // import Head from "next/head";
-// import { useRouter } from "next/navigation";
-// import { useState } from "react";
 
-// const Typewriter = dynamic(() => import("react-typewriter-effect"), {
-//   ssr: false,
-// });
-
-// interface Product {
-//   id: string;
-//   title: string;
-//   description: string;
-//   features: string[];
-//   image: string;
-//   icon: React.ReactNode;
-//   category: string;
-//   popular?: boolean;
+// interface EducationLink {
+//   name: string;
+//   description?: string;
+//   url: string;
+//   bannerEmoji: string;
+//   bannerColor: string;
+//   teoria: string;
 // }
 
-// const ProductsPage = () => {
-//   const [activeCategory, setActiveCategory] = useState<string>("all");
-//   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-//   // Produtos ajustados, removendo os preços
-//   const products: Product[] = [
+// const EducationLinksPage = () => {
+//   const educationLinks: EducationLink[] = [
 //     {
-//       id: "1",
-//       title: "Kit Educacional: Corpo Negro",
+//       name: "Teoria do Salto Quântico",
 //       description:
-//         "Conjunto para estudo prático e visual do fenômeno do Corpo Negro.",
-//       features: [
-//         "Exploração prática da radiação de corpo negro",
-//         "Visualização da relação entre temperatura e cor",
-//         "Contexto histórico e aplicações na Física Moderna",
-//         "Experimentos interativos para sala de aula",
-//         "Material didático adaptado para até 30 alunos",
-//         "Atividades avaliativas e desafios de aprendizagem",
-//       ],
-//       image: "corpo-negro.png",
-//       icon: <LightningIcon />,
-//       category: "projetos",
+//         "Exploração completa da teoria do salto quântico na física quântica - transições discretas entre níveis de energia",
+//       url: "https://s-ruddy-five.vercel.app/",
+//       bannerEmoji: "⚡",
+//       bannerColor: "from-purple-600 to-blue-600",
+//       teoria: "Salto Quântico",
 //     },
-    
 //     {
-//       id: "2",
-//       title: "Coleção de Materiais Didáticos",
-//       description: "Conteúdo complementar com linguagem acessível para alunos",
-//       features: [
-//         "5 volumes impressos",
-//         "Atividades de aprendizagem ativa",
-//         "Problemas contextualizados",
-//         "Resolução comentada",
-//         "Acesso à versão digital",
-//       ],
-//       image: "corpo-negro.png",
-//       icon: <BookIcon />,
-//       category: "material",
+//       name: "Gato de Schrödinger",
+//       description:
+//         "Paradoxo quântico do gato que está vivo e morto simultaneamente - superposição de estados",
+//       url: "https://gatov2.vercel.app/",
+//       bannerEmoji: "🐱",
+//       bannerColor: "from-orange-600 to-red-600",
+//       teoria: "Superposição Quântica",
 //     },
-    
+//     {
+//       name: "Experimento da Dupla Fenda",
+//       description:
+//         "O famoso experimento que demonstra a natureza dual onda-partícula da matéria",
+//       url: "https://dupla-fenda.vercel.app/",
+//       bannerEmoji: "🔬",
+//       bannerColor: "from-green-600 to-teal-600",
+//       teoria: "Dualidade Onda-Partícula",
+//     },
 //   ];
 
-//   const categories = [
-//     { id: "all", name: "Todos" },
-//     { id: "projetos", name: "Kits Educacionais" },
-//     { id: "material", name: "Material Didático" },
-//   ];
-
-//   const filteredProducts =
-//     activeCategory === "all"
-//       ? products
-//       : products.filter((product) => product.category === activeCategory);
-
-//   const router = useRouter();
 //   return (
 //     <>
 //       <Head>
-//         <title>Nossos Produtos | Física Interativa</title>
+//         <title>Plataformas de Ensino Quântico</title>
 //         <meta
 //           name="description"
-//           content="Soluções para ensino de física com Kits Educacionais, treinamentos e materiais didáticos"
+//           content="Ferramentas de apoio ao ensino quântico - Teoria do Salto Quântico, Gato de Schrödinger e Dupla Fenda"
 //         />
 //       </Head>
 
@@ -546,737 +58,139 @@
 //         <div className="absolute top-6 left-6 z-10">
 //           <BackToHome />
 //         </div>
+
 //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 //           {/* Cabeçalho */}
 //           <motion.div
 //             initial={{ opacity: 0, y: 20 }}
 //             animate={{ opacity: 1, y: 0 }}
 //             transition={{ duration: 0.6 }}
-//             className="text-center mb-16"
+//             className="text-center mb-12"
 //           >
-//             <h2
-//               id="hero-heading"
-//               className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-//             >
-//               <Typewriter
-//                 text="Nossas Soluções"
-//                 typeSpeed={50}
-//                 cursorColor="#a855f7"
-//                 hideCursorAfterText={true}
-//                 textStyle={{
-//                   background: "linear-gradient(to right, #60a5fa, #a855f7)",
-//                   WebkitBackgroundClip: "text",
-//                   backgroundClip: "text",
-//                   color: "transparent",
-//                   display: "inline-block",
-//                 }}
-//               />
-//             </h2>
-//             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-//               Conheça nossos produtos desenvolvidos para transformar o ensino de
-//               Física
+//             <div className="inline-block p-4 bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 rounded-full mb-4 shadow-lg shadow-purple-600/30">
+//               <span className="text-5xl">⚛️</span>
+//             </div>
+//             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+//               Plataformas de Ensino
+//             </h1>
+//             <p className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium mb-2">
+//               Ferramentas de apoio ao ensino quântico
+//             </p>
+//             <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+//               Explorando os mistérios da física quântica através de recursos
+//               interativos
 //             </p>
 //           </motion.div>
 
-//           {/* Filtros por categoria */}
+//           {/* Grid de Cards - 3 teorias principais */}
 //           <motion.div
-//             className="flex flex-wrap justify-center gap-4 mb-12"
 //             initial={{ opacity: 0 }}
 //             animate={{ opacity: 1 }}
-//             transition={{ delay: 0.3 }}
+//             transition={{ delay: 0.2 }}
+//             className="grid md:grid-cols-3 gap-6"
 //           >
-//             {categories.map((category) => (
-//               <button
-//                 key={category.id}
-//                 onClick={() => setActiveCategory(category.id)}
-//                 className={`px-6 py-2 rounded-full font-medium transition-all ${
-//                   activeCategory === category.id
-//                     ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-//                     : "bg-slate-700 text-gray-300 hover:bg-slate-600"
-//                 }`}
+//             {educationLinks.map((link, index) => (
+//               <motion.a
+//                 key={index}
+//                 href={link.url}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 initial={{ opacity: 0, y: 20 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 transition={{ delay: 0.1 * index }}
+//                 whileHover={{ y: -8, scale: 1.02 }}
+//                 className="block bg-slate-800/80 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700 hover:border-blue-500/50 transition-all duration-300 group"
 //               >
-//                 {category.name}
-//               </button>
+//                 {/* Banner com gradiente e emoji */}
+//                 <div
+//                   className={`h-40 bg-gradient-to-r ${link.bannerColor} relative overflow-hidden`}
+//                 >
+//                   {/* Padrão de ondas quânticas */}
+//                   <div className="absolute inset-0 opacity-20">
+//                     <div className="absolute bottom-0 left-0 w-full h-8 bg-white/10 transform -skew-y-3"></div>
+//                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+//                   </div>
+
+//                   {/* Emoji centralizado */}
+//                   <div className="absolute inset-0 flex items-center justify-center">
+//                     <span className="text-7xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 drop-shadow-2xl">
+//                       {link.bannerEmoji}
+//                     </span>
+//                   </div>
+
+//                   {/* Tag da teoria */}
+//                   <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1">
+//                     <span className="text-xs text-white font-medium">
+//                       {link.teoria}
+//                     </span>
+//                   </div>
+//                 </div>
+
+//                 {/* Conteúdo do card */}
+//                 <div className="p-6">
+//                   <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+//                     {link.name}
+//                   </h3>
+
+//                   {link.description && (
+//                     <p className="text-sm text-gray-400 mb-4">
+//                       {link.description}
+//                     </p>
+//                   )}
+
+//                   <div className="flex items-center justify-between">
+//                     <span className="text-xs text-gray-500">
+//                       {new URL(link.url).hostname.replace("www.", "")}
+//                     </span>
+
+//                     <span className="inline-flex items-center text-sm text-blue-400 font-medium">
+//                       Acessar recurso
+//                       <svg
+//                         className="w-4 h-4 ml-1"
+//                         fill="none"
+//                         stroke="currentColor"
+//                         viewBox="0 0 24 24"
+//                       >
+//                         <path
+//                           strokeLinecap="round"
+//                           strokeLinejoin="round"
+//                           strokeWidth={2}
+//                           d="M14 5l7 7m0 0l-7 7m7-7H3"
+//                         />
+//                       </svg>
+//                     </span>
+//                   </div>
+//                 </div>
+//               </motion.a>
 //             ))}
 //           </motion.div>
 
-//           {/* Grid de Produtos */}
+//           {/* Rodapé com citação quântica */}
 //           <motion.div
-//             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-//             layout
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             transition={{ delay: 0.6 }}
+//             className="text-center mt-16 pt-8 border-t border-slate-700"
 //           >
-//             <AnimatePresence>
-//               {filteredProducts.map((product, index) => (
-//                 <motion.div
-//                   key={product.id}
-//                   layout
-//                   initial={{ opacity: 0, y: 20 }}
-//                   animate={{ opacity: 1, y: 0 }}
-//                   exit={{ opacity: 0, scale: 0.9 }}
-//                   transition={{ duration: 0.4, delay: index * 0.1 }}
-//                   className="relative"
-//                 >
-//                   <div
-//                     className="bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-700 hover:border-blue-500/50 h-full flex flex-col cursor-pointer"
-//                     onClick={() => setSelectedProduct(product)}
-//                   >
-//                     <div className="h-48 bg-slate-700 overflow-hidden">
-//                       <div className="w-full h-full bg-gradient-to-br from-blue-900/30 to-purple-900/20 flex items-center justify-center text-gray-400">
-//                         <img src={product.image} alt="" />
-//                       </div>
-//                     </div>
-
-//                     <div className="p-6 flex-1 flex flex-col">
-//                       <div className="flex items-center mb-4">
-//                         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-12 h-12 rounded-lg flex items-center justify-center text-white mr-4">
-//                           {product.icon}
-//                         </div>
-//                         <h3 className="text-xl font-bold text-white">
-//                           {product.title}
-//                         </h3>
-//                       </div>
-
-//                       <p className="text-gray-300 mb-4 flex-1">
-//                         {product.description}
-//                       </p>
-
-//                       <div className="mt-auto">
-//                         <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
-//                           Saiba Mais
-//                         </button>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </motion.div>
-//               ))}
-//             </AnimatePresence>
+//             <p className="text-gray-400 italic mb-3 text-lg">
+//               "A coisa mais incompreensível sobre o universo é que ele é
+//               compreensível."
+//               <span className="block text-gray-500 text-sm mt-2">
+//                 — Albert Einstein
+//               </span>
+//             </p>
+//             <p className="text-gray-500 text-sm flex items-center justify-center gap-3 mt-6">
+//               <span>⚛️</span>
+//               <span>
+//                 Todos os links abrem em nova aba • Explorando o mundo quântico
+//               </span>
+//               <span>⚛️</span>
+//             </p>
 //           </motion.div>
 //         </div>
-
-//         {/* Modal de Detalhes do Produto */}
-//         <AnimatePresence>
-//           {selectedProduct && (
-//             <motion.div
-//               className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
-//               initial={{ opacity: 0 }}
-//               animate={{ opacity: 1 }}
-//               exit={{ opacity: 0 }}
-//               onClick={() => setSelectedProduct(null)}
-//             >
-//               <motion.div
-//                 className="bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-//                 initial={{ scale: 0.9, opacity: 0 }}
-//                 animate={{ scale: 1, opacity: 1 }}
-//                 exit={{ scale: 0.9, opacity: 0 }}
-//                 onClick={(e) => e.stopPropagation()}
-//               >
-//                 <div className="relative">
-//                   <button
-//                     className="absolute top-4 right-4 bg-slate-700/50 hover:bg-slate-700 rounded-full p-2 z-10"
-//                     onClick={() => setSelectedProduct(null)}
-//                   >
-//                     <XIcon />
-//                   </button>
-
-//                   <div className="grid md:grid-cols-2">
-//                     <div className="h-64 md:h-full bg-slate-700 flex items-center justify-center">
-//                       <div className="w-full h-full bg-gradient-to-br from-blue-900/30 to-purple-900/20 flex items-center justify-center text-gray-400">
-//                         [Imagem detalhada: {selectedProduct.title}]
-//                       </div>
-//                     </div>
-
-//                     <div className="p-8">
-//                       <div className="flex items-center mb-6">
-//                         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-14 h-14 rounded-xl flex items-center justify-center text-white mr-4">
-//                           {selectedProduct.icon}
-//                         </div>
-//                         <h2 className="text-2xl font-bold text-white">
-//                           {selectedProduct.title}
-//                         </h2>
-//                       </div>
-
-//                       <p className="text-gray-300 mb-6">
-//                         {selectedProduct.description}
-//                       </p>
-
-//                       <div className="mb-8">
-//                         <h3 className="text-lg font-semibold text-white mb-3">
-//                           Benefícios Incluídos:
-//                         </h3>
-//                         <ul className="space-y-2">
-//                           {selectedProduct.features.map((feature, index) => (
-//                             <li
-//                               key={index}
-//                               className="flex items-start text-gray-300"
-//                             >
-//                               <div className="text-green-500 mr-2 mt-1 flex-shrink-0">
-//                                 <CheckIcon />
-//                               </div>
-//                               <span>{feature}</span>
-//                             </li>
-//                           ))}
-//                         </ul>
-//                       </div>
-
-//                       <div className="flex flex-col sm:flex-row gap-4">
-//                         <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors flex-1">
-//                           Solicitar Orçamento
-//                         </button>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </motion.div>
-//             </motion.div>
-//           )}
-//         </AnimatePresence>
 //       </section>
 //     </>
 //   );
 // };
 
-// // Componentes de ícone personalizados (mantidos inalterados)
-// const LightningIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="24"
-//     height="24"
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-//   </svg>
-// );
-
-// const LightIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="24"
-//     height="24"
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <circle cx="12" cy="12" r="5"></circle>
-//     <line x1="12" y1="1" x2="12" y2="3"></line>
-//     <line x1="12" y1="21" x2="12" y2="23"></line>
-//     <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-//     <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-//     <line x1="1" y1="12" x2="3" y2="12"></line>
-//     <line x1="21" y1="12" x2="23" y2="12"></line>
-//     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-//     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-//   </svg>
-// );
-
-// const TrainingIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="24"
-//     height="24"
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-//     <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-//     <path d="M2 2l7.586 7.586"></path>
-//     <circle cx="11" cy="11" r="2"></circle>
-//   </svg>
-// );
-
-// const BookIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="24"
-//     height="24"
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-//     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-//   </svg>
-// );
-
-// const XIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="24"
-//     height="24"
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <line x1="18" y1="6" x2="6" y2="18"></line>
-//     <line x1="6" y1="6" x2="18" y2="18"></line>
-//   </svg>
-// );
-
-// const CheckIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="20"
-//     height="20"
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke="currentColor"
-//     strokeWidth="2"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <polyline points="20 6 9 17 4 12"></polyline>
-//   </svg>
-// );
-
-// export default ProductsPage;
-"use client";
-
-import { BackToHome } from "@/components/BackToHome";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
-
-const Typewriter = dynamic(() => import("react-typewriter-effect"), {
-  ssr: false,
-});
-
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  features: string[];
-  media: string; // Alterado para media (pode ser vídeo ou imagem)
-  mediaType: "video" | "image"; // Tipo de mídia
-  icon: React.ReactNode;
-  category: string;
-  popular?: boolean;
-}
-
-const ProductsPage = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-
-  // Produtos ajustados
-  const products: Product[] = [
-    {
-      id: "1",
-      title: "Kit Educacional: Corpo Negro",
-      description:
-        "Conjunto para estudo prático e visual do fenômeno do Corpo Negro.",
-      features: [
-        "Exploração prática da radiação de corpo negro",
-        "Visualização da relação entre temperatura e cor",
-        "Contexto histórico e aplicações na Física Moderna",
-        "Experimentos interativos para sala de aula",
-        "Material didático adaptado para até 30 alunos",
-        "Atividades avaliativas e desafios de aprendizagem",
-      ],
-      media: "corpo-negro.mp4",
-      mediaType: "video",
-      icon: <LightningIcon />,
-      category: "projetos",
-    },
-    
-    {
-      id: "2",
-      title: "Coleção de Materiais Didáticos",
-      description: "Conteúdo complementar com linguagem acessível para alunos",
-      features: [
-        "5 volumes impressos",
-        "Atividades de aprendizagem ativa",
-        "Problemas contextualizados",
-        "Resolução comentada",
-        "Acesso à versão digital",
-      ],
-      media: "/corpo-negro.png", // Mantém como imagem
-      mediaType: "image",
-      icon: <BookIcon />,
-      category: "material",
-    },
-    
-  ];
-
-  const categories = [
-    { id: "all", name: "Todos" },
-    { id: "projetos", name: "Kits Educacionais" },
-    { id: "material", name: "Material Didático" },
-  ];
-
-  const filteredProducts =
-    activeCategory === "all"
-      ? products
-      : products.filter((product) => product.category === activeCategory);
-
-  const router = useRouter();
-  
-  return (
-    <>
-      <Head>
-        <title>Nossos Produtos | Física Interativa</title>
-        <meta
-          name="description"
-          content="Soluções para ensino de física com Kits Educacionais, treinamentos e materiais didáticos"
-        />
-      </Head>
-
-      <section className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 py-20">
-        <div className="absolute top-6 left-6 z-10">
-          <BackToHome />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Cabeçalho */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2
-              id="hero-heading"
-              className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-            >
-              <Typewriter
-                text="Nossas Soluções"
-                typeSpeed={50}
-                cursorColor="#a855f7"
-                hideCursorAfterText={true}
-                textStyle={{
-                  background: "linear-gradient(to right, #60a5fa, #a855f7)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                  display: "inline-block",
-                }}
-              />
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Conheça nossos produtos desenvolvidos para transformar o ensino de
-              Física
-            </p>
-          </motion.div>
-
-          {/* Filtros por categoria */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-4 mb-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
-                  activeCategory === category.id
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-                    : "bg-slate-700 text-gray-300 hover:bg-slate-600"
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Grid de Produtos */}
-          <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            layout
-          >
-            <AnimatePresence>
-              {filteredProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="relative"
-                >
-                  <div
-                    className="bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-700 hover:border-blue-500/50 h-full flex flex-col cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
-                  >
-                    <div className="h-48 bg-slate-700 overflow-hidden">
-                      <div className="w-full h-full bg-gradient-to-br from-blue-900/30 to-purple-900/20 flex items-center justify-center">
-                        {product.mediaType === "video" ? (
-                          <video
-                            ref={(el) => {
-                              videoRefs.current[index] = el;
-                            }}
-                            src={product.media}
-                            className="w-full h-full object-cover"
-                            muted
-                            loop
-                            playsInline
-                            preload="metadata"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400">
-                            <img 
-                              src={product.media} 
-                              alt={product.title}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="p-6 flex-1 flex flex-col">
-                      <div className="flex items-center mb-4">
-                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-12 h-12 rounded-lg flex items-center justify-center text-white mr-4">
-                          {product.icon}
-                        </div>
-                        <h3 className="text-xl font-bold text-white">
-                          {product.title}
-                        </h3>
-                      </div>
-
-                      <p className="text-gray-300 mb-4 flex-1">
-                        {product.description}
-                      </p>
-
-                      <div className="mt-auto">
-                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
-                          Saiba Mais
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-
-        {/* Modal de Detalhes do Produto */}
-        <AnimatePresence>
-          {selectedProduct && (
-            <motion.div
-              className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedProduct(null)}
-            >
-              <motion.div
-                className="bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="relative">
-                  <button
-                    className="absolute top-4 right-4 bg-slate-700/50 hover:bg-slate-700 rounded-full p-2 z-10"
-                    onClick={() => setSelectedProduct(null)}
-                  >
-                    <XIcon />
-                  </button>
-
-                  <div className="grid md:grid-cols-2">
-                    <div className="h-64 md:h-full bg-slate-700 flex items-center justify-center">
-                      <div className="w-full h-full bg-gradient-to-br from-blue-900/30 to-purple-900/20 flex items-center justify-center">
-                        {selectedProduct.mediaType === "video" ? (
-                          <video
-                            src={selectedProduct.media}
-                            className="w-full h-full object-cover"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            controls
-                          />
-                        ) : (
-                          <img 
-                            src={selectedProduct.media} 
-                            alt={selectedProduct.title}
-                            className="w-full h-full object-cover"
-                          />
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="p-8">
-                      <div className="flex items-center mb-6">
-                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 w-14 h-14 rounded-xl flex items-center justify-center text-white mr-4">
-                          {selectedProduct.icon}
-                        </div>
-                        <h2 className="text-2xl font-bold text-white">
-                          {selectedProduct.title}
-                        </h2>
-                      </div>
-
-                      <p className="text-gray-300 mb-6">
-                        {selectedProduct.description}
-                      </p>
-
-                      <div className="mb-8">
-                        <h3 className="text-lg font-semibold text-white mb-3">
-                          Benefícios Incluídos:
-                        </h3>
-                        <ul className="space-y-2">
-                          {selectedProduct.features.map((feature, index) => (
-                            <li
-                              key={index}
-                              className="flex items-start text-gray-300"
-                            >
-                              <div className="text-green-500 mr-2 mt-1 flex-shrink-0">
-                                <CheckIcon />
-                              </div>
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors flex-1">
-                          Solicitar Orçamento
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </section>
-    </>
-  );
-};
-
-// Componentes de ícone personalizados (mantidos inalterados)
-const LightningIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-  </svg>
-);
-
-const LightIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="5"></circle>
-    <line x1="12" y1="1" x2="12" y2="3"></line>
-    <line x1="12" y1="21" x2="12" y2="23"></line>
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-    <line x1="1" y1="12" x2="3" y2="12"></line>
-    <line x1="21" y1="12" x2="23" y2="12"></line>
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-  </svg>
-);
-
-const TrainingIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-    <path d="M2 2l7.586 7.586"></path>
-    <circle cx="11" cy="11" r="2"></circle>
-  </svg>
-);
-
-const BookIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-  </svg>
-);
-
-const XIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="18" y1="6" x2="6" y2="18"></line>
-    <line x1="6" y1="6" x2="18" y2="18"></line>
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="20 6 9 17 4 12"></polyline>
-  </svg>
-);
-
-export default ProductsPage;
+// export default EducationLinksPage;

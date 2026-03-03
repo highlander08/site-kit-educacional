@@ -101,11 +101,11 @@ const AboutPage: React.FC = () => {
       label: "Nossos Kits",
       icon: <Package className="w-5 h-5" />,
     },
-    {
-      url: "/nossos-produtos",
-      label: "Produtos",
-      icon: <Lightbulb className="w-5 h-5" />,
-    },
+    // {
+    //   url: "/nossos-produtos",
+    //   label: "Produtos",
+    //   icon: <Lightbulb className="w-5 h-5" />,
+    // },
     {
       url: "/materiais",
       label: "Materiais",
