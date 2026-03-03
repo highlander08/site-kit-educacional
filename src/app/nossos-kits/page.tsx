@@ -22,7 +22,7 @@ interface Kit {
   description: string;
   phenomenon: string;
   features: string[];
-  video: string; // Alterado de image para video
+  video: string;
   rotate?: boolean;
   benefits: {
     icon: React.ReactNode;
@@ -32,7 +32,8 @@ interface Kit {
 
 const KitsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const router = useRouter();
 
   const kits: Kit[] = [
     {
@@ -43,11 +44,14 @@ const KitsSection = () => {
       phenomenon:
         "Demonstra como objetos aquecidos emitem radiação eletromagnética em diferentes frequências, fundamental para compreender a física quântica.",
       features: [
-        "Controle de temperatura digital",
-        "Interface gráfica intuitiva",
+        "Potenciometro para Controle de temperatura digital",
+        "Display para Interface gráfica intuitiva",
         "Materiais didáticos completos",
+        "Botões para interatividade",
+        "fitas de leds luminescentes",
       ],
-      video: "/new1-corpo-negro.mp4",
+      video:
+        "https://res.cloudinary.com/raystyle/video/upload/new1-corpo-negro_godjga.mp4",
       benefits: [
         {
           icon: <Zap className="w-5 h-5 text-yellow-400" />,
@@ -71,13 +75,13 @@ const KitsSection = () => {
       phenomenon:
         "Ilustra como a luz pode ejetar elétrons de uma superfície metálica, comprovando a natureza corpuscular da radiação.",
       features: [
-        "Fontes de luz com diferentes frequências",
-        "Detector de elétrons de alta sensibilidade",
-        "Medidor de energia cinética",
-        "Placas metálicas intercambiáveis",
-        "Roteiros de atividades práticas",
+        "leds para simulação do efeito fotoelétrico",
+        "display para visualização do efeito",
+        "placa fotovoltaica para demonstração prática",
+        "botões para interação",
       ],
-      video: "/new3-efeito-foto.mp4", // Caminho para o vídeo
+      video:
+        "https://res.cloudinary.com/raystyle/video/upload/new3-efeito-foto_ra711r.mp4",
       rotate: true,
       benefits: [
         {
@@ -96,89 +100,53 @@ const KitsSection = () => {
     },
     {
       id: 3,
-      title: "Kit Efeito Fotoelétrico",
-      description:
-        "Demonstra o efeito fotoelétrico descoberto por Einstein, mostrando a natureza quântica da luz.",
-      phenomenon:
-        "Ilustra como a luz pode ejetar elétrons de uma superfície metálica, comprovando a natureza corpuscular da radiação.",
+      title: "Kit Salto Quântico",
+      description: "Explora transições energéticas em átomos.",
+      phenomenon: "Mostra como elétrons saltam entre níveis de energia.",
       features: [
-        "Fontes de luz com diferentes frequências",
-        "Detector de elétrons de alta sensibilidade",
-        "Medidor de energia cinética",
-        "Placas metálicas intercambiáveis",
-        "Roteiros de atividades práticas",
+        "Botões para controle de transições",
+        "led ultravioletas para simular excitação atômica",
+        "display para visualização de níveis de energia",
+        "Roteiros práticos",
       ],
-      video: "/new2-salto-quantico.mp4", // Caminho para o vídeo
+      video:
+        "https://res.cloudinary.com/raystyle/video/upload/new2-salto-quantico_tuheif.mp4",
       benefits: [
         {
           icon: <Zap className="w-5 h-5 text-yellow-400" />,
-          text: "Comprovação experimental da teoria quântica",
+          text: "Visualização clara",
         },
         {
           icon: <Target className="w-5 h-5 text-blue-400" />,
-          text: "Excelente para introduzir conceitos de física moderna",
+          text: "Didática moderna",
         },
         {
           icon: <Heart className="w-5 h-5 text-red-400" />,
-          text: "Engaja estudantes com experimentos hands-on",
+          text: "Aprendizado envolvente",
         },
       ],
     },
   ];
 
-  const nextSlide = () => {
-    // Pausar vídeo atual
-    if (videoRefs.current[currentSlide]) {
-      videoRefs.current[currentSlide]?.pause();
-    }
-
-    setCurrentSlide((prev) => (prev + 1) % kits.length);
-
-    // Reproduzir próximo vídeo após a transição
-    setTimeout(() => {
-      if (videoRefs.current[(currentSlide + 1) % kits.length]) {
-        videoRefs.current[(currentSlide + 1) % kits.length]
-          ?.play()
-          .catch(console.error);
-      }
-    }, 300);
-  };
-
-  const prevSlide = () => {
-    // Pausar vídeo atual
-    if (videoRefs.current[currentSlide]) {
-      videoRefs.current[currentSlide]?.pause();
-    }
-
-    setCurrentSlide((prev) => (prev - 1 + kits.length) % kits.length);
-
-    // Reproduzir vídeo anterior após a transição
-    setTimeout(() => {
-      if (videoRefs.current[(currentSlide - 1 + kits.length) % kits.length]) {
-        videoRefs.current[(currentSlide - 1 + kits.length) % kits.length]
-          ?.play()
-          .catch(console.error);
-      }
-    }, 300);
-  };
-
-  const goToSlide = (index: number) => {
-    // Pausar vídeo atual
-    if (videoRefs.current[currentSlide]) {
-      videoRefs.current[currentSlide]?.pause();
+  const changeSlide = (index: number) => {
+    if (videoRef.current) {
+      videoRef.current.pause();
     }
 
     setCurrentSlide(index);
 
-    // Reproduzir novo vídeo após a transição
     setTimeout(() => {
-      if (videoRefs.current[index]) {
-        videoRefs.current[index]?.play().catch(console.error);
+      if (videoRef.current) {
+        videoRef.current.load();
+        videoRef.current.play().catch(() => {});
       }
-    }, 300);
+    }, 200);
   };
 
-  const router = useRouter();
+  const nextSlide = () => changeSlide((currentSlide + 1) % kits.length);
+
+  const prevSlide = () =>
+    changeSlide((currentSlide - 1 + kits.length) % kits.length);
 
   return (
     <section
@@ -188,24 +156,14 @@ const KitsSection = () => {
       <div className="absolute top-6 left-6 z-10">
         <BackToHome />
       </div>
+
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2
-            id="hero-heading"
-            className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-          >
+          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             <Typewriter
               text="Nossos Kits Educacionais"
               typeSpeed={50}
-              cursorColor="#a855f7"
-              hideCursorAfterText={true}
-              textStyle={{
-                background: "linear-gradient(to right, #60a5fa, #a855f7)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-                display: "inline-block",
-              }}
+              hideCursorAfterText
             />
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
@@ -214,127 +172,98 @@ const KitsSection = () => {
           </p>
         </div>
 
-        {/* Kit Details */}
         <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700 shadow-2xl">
-          <div className="grid lg:grid-cols-2 gap-0">
-            {/* Vídeo do Kit */}
-            <div className="relative h-full min-h-[400px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
+          <div className="grid lg:grid-cols-2">
+            {/* VIDEO */}
+            <div className="relative min-h-[400px] bg-black">
               <video
-                ref={(el) => {
-                  videoRefs.current[currentSlide] = el;
-                }}
+                ref={videoRef}
+                key={kits[currentSlide].video}
                 src={kits[currentSlide].video}
-                className={`w-full h-full object-cover ${
-                  kits[currentSlide].rotate ? "rotate-180" : ""
+                className={`w-full h-full ${
+                  kits[currentSlide].rotate
+                    ? "object-contain rotate-180"
+                    : "object-cover"
                 }`}
                 autoPlay
                 muted
                 loop
                 playsInline
-                controls // Opcional: remove se não quiser controles visíveis
-              >
-                Seu navegador não suporta o elemento de vídeo.
-              </video>
+                controls
+              />
             </div>
 
-            {/* Conteúdo do Kit */}
+            {/* CONTEÚDO */}
             <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-2">
-                    {kits[currentSlide].title}
-                  </h3>
-                  <p className="text-blue-300 font-medium">
-                    Física Quântica Experimental
-                  </p>
-                </div>
-                <div className="bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full text-sm">
-                  Kit {currentSlide + 1}/{kits.length}
-                </div>
-              </div>
+              <h3 className="text-3xl font-bold text-white mb-4">
+                {kits[currentSlide].title}
+              </h3>
 
-              <p className="text-gray-300 text-lg mb-6">
+              <p className="text-gray-300 mb-6">
                 {kits[currentSlide].description}
               </p>
 
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold text-white mb-3 flex items-center">
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-600 w-2 h-2 rounded-full mr-2"></span>
-                  Fenômeno Estudado
-                </h4>
-                <p className="text-gray-300 pl-4">
-                  {kits[currentSlide].phenomenon}
-                </p>
-              </div>
+              <h4 className="text-xl font-semibold text-white mb-2">
+                Fenômeno Estudado
+              </h4>
+              <p className="text-gray-300 mb-6">
+                {kits[currentSlide].phenomenon}
+              </p>
 
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold text-white mb-3 flex items-center">
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-600 w-2 h-2 rounded-full mr-2"></span>
-                  Componentes Principais
-                </h4>
-                <ul className="grid grid-cols-2 gap-2">
-                  {kits[currentSlide].features.map((feature, index) => (
-                    <li key={index} className="flex items-start text-gray-300">
-                      <ChevronRight
-                        className="text-blue-400 mr-2 mt-1 flex-shrink-0"
-                        size={16}
-                      />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h4 className="text-xl font-semibold text-white mb-2">
+                Componentes
+              </h4>
+              <ul className="mb-6 space-y-1">
+                {kits[currentSlide].features.map((feature, index) => (
+                  <li key={index} className="text-gray-300 flex items-center">
+                    <ChevronRight size={16} className="mr-2 text-blue-400" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
 
-              <div>
-                <h4 className="text-xl font-semibold text-white mb-3 flex items-center">
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-600 w-2 h-2 rounded-full mr-2"></span>
-                  Benefícios Pedagógicos
-                </h4>
-                <div className="space-y-3">
-                  {kits[currentSlide].benefits.map((benefit, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start bg-slate-700/50 p-3 rounded-lg"
-                    >
-                      <div className="bg-slate-600/50 p-1 rounded-full mr-3">
-                        {benefit.icon}
-                      </div>
-                      <p className="text-gray-300">{benefit.text}</p>
-                    </div>
-                  ))}
-                </div>
+              <h4 className="text-xl font-semibold text-white mb-2">
+                Benefícios Pedagógicos
+              </h4>
+              <div className="space-y-2">
+                {kits[currentSlide].benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-center text-gray-300">
+                    <div className="mr-2">{benefit.icon}</div>
+                    {benefit.text}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Controles do Carrossel */}
+          {/* CONTROLES */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-700/80 hover:bg-slate-600 text-white p-3 rounded-full shadow-lg transition-all z-20"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-700 p-3 rounded-full"
             aria-label="Slide anterior"
           >
             <ChevronLeft size={24} />
           </button>
+
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-700/80 hover:bg-slate-600 text-white p-3 rounded-full shadow-lg transition-all z-20"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-700 p-3 rounded-full"
             aria-label="Próximo slide"
           >
             <ChevronRight size={24} />
           </button>
         </div>
 
-        {/* Indicadores */}
-        <div className="flex justify-center mt-8 space-x-2">
+        {/* INDICADORES */}
+        <div className="flex justify-center mt-6 space-x-2">
           {kits.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
+              aria-label={`Ir para slide ${index + 1}`}
+              onClick={() => changeSlide(index)}
+              className={`w-3 h-3 rounded-full ${
                 index === currentSlide ? "bg-blue-500" : "bg-slate-600"
               }`}
-              aria-label={`Ir para o slide ${index + 1}`}
             />
           ))}
         </div>
