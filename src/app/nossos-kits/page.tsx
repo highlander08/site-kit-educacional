@@ -23,6 +23,7 @@ interface Kit {
   phenomenon: string;
   features: string[];
   video: string; // Alterado de image para video
+  rotate?: boolean;
   benefits: {
     icon: React.ReactNode;
     text: string;
@@ -46,7 +47,7 @@ const KitsSection = () => {
         "Interface gráfica intuitiva",
         "Materiais didáticos completos",
       ],
-      video: "/corpo-negro.mp4", // Caminho para o vídeo
+      video: "/new1-corpo-negro.mp4",
       benefits: [
         {
           icon: <Zap className="w-5 h-5 text-yellow-400" />,
@@ -76,7 +77,38 @@ const KitsSection = () => {
         "Placas metálicas intercambiáveis",
         "Roteiros de atividades práticas",
       ],
-      video: "/corpo-negro.mp4", // Caminho para o vídeo
+      video: "/new3-efeito-foto.mp4", // Caminho para o vídeo
+      rotate: true,
+      benefits: [
+        {
+          icon: <Zap className="w-5 h-5 text-yellow-400" />,
+          text: "Comprovação experimental da teoria quântica",
+        },
+        {
+          icon: <Target className="w-5 h-5 text-blue-400" />,
+          text: "Excelente para introduzir conceitos de física moderna",
+        },
+        {
+          icon: <Heart className="w-5 h-5 text-red-400" />,
+          text: "Engaja estudantes com experimentos hands-on",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Kit Efeito Fotoelétrico",
+      description:
+        "Demonstra o efeito fotoelétrico descoberto por Einstein, mostrando a natureza quântica da luz.",
+      phenomenon:
+        "Ilustra como a luz pode ejetar elétrons de uma superfície metálica, comprovando a natureza corpuscular da radiação.",
+      features: [
+        "Fontes de luz com diferentes frequências",
+        "Detector de elétrons de alta sensibilidade",
+        "Medidor de energia cinética",
+        "Placas metálicas intercambiáveis",
+        "Roteiros de atividades práticas",
+      ],
+      video: "/new2-salto-quantico.mp4", // Caminho para o vídeo
       benefits: [
         {
           icon: <Zap className="w-5 h-5 text-yellow-400" />,
@@ -193,7 +225,9 @@ const KitsSection = () => {
                   videoRefs.current[currentSlide] = el;
                 }}
                 src={kits[currentSlide].video}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover ${
+                  kits[currentSlide].rotate ? "rotate-180" : ""
+                }`}
                 autoPlay
                 muted
                 loop
