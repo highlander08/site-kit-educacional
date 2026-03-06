@@ -38,7 +38,6 @@ interface Tema {
   materiais: {
     pdfProfessor: Material;
     pdfAluno: Material;
-    slides: Material;
     video: Material;
   };
 }
@@ -63,12 +62,6 @@ const temasData: Record<string, Tema> = {
         descricao:
           "Teoria resumida, exemplos resolvidos, exercícios progressivos e questões contextualizadas.",
         url: "/Corpo_Negro_Estudante.pdf",
-      },
-      slides: {
-        titulo: "Apresentação – Corpo Negro",
-        descricao:
-          "Slides otimizados para projeção: diagramas claros, animações simples e textos legíveis.",
-        url: "/slides-corpo-negro.pdf",
       },
       video: {
         titulo: "Vídeo Explicativo – Corpo Negro",
@@ -99,12 +92,6 @@ const temasData: Record<string, Tema> = {
           "Conteúdo teórico claro, diagramas de níveis de energia e exercícios resolvidos + propostos.",
         url: "/Salto_Quântico_Aluno.pdf",
       },
-      slides: {
-        titulo: "Apresentação – Salto Quântico",
-        descricao:
-          "Slides didáticos com animações de transições e espectros de emissão/absorção.",
-        url: "/slides-salto.pdf",
-      },
       video: {
         titulo: "Vídeo Explicativo – Salto Quântico",
         descricao:
@@ -133,12 +120,6 @@ const temasData: Record<string, Tema> = {
         descricao:
           "Explicação passo a passo, gráficos interativos sugeridos e banco de exercícios.",
         url: "/Fotoelétrico_Aluno.pdf",
-      },
-      slides: {
-        titulo: "Apresentação – Efeito Fotoelétrico",
-        descricao:
-          "Slides com gráficos clássicos, equação de Einstein e experimento conceitual claro.",
-        url: "/slides-fotoeletrico.pdf",
       },
       video: {
         titulo: "Vídeo Explicativo – Efeito Fotoelétrico",
@@ -257,17 +238,8 @@ export default function MaterialPage() {
               cor="bg-emerald-600 hover:bg-emerald-700"
             />
 
-            {/* APRESENTAÇÃO (antigos slides) */}
-            <CardDownload
-              icon={Download}
-              titulo={temaAtivo.materiais.slides.titulo}
-              descricao={temaAtivo.materiais.slides.descricao}
-              url={temaAtivo.materiais.slides.url}
-              cor="bg-violet-600 hover:bg-violet-700"
-            />
-
-            {/* VIDEO */}
-            <div className="bg-white p-7 rounded-2xl shadow-lg border border-gray-100 col-span-full md:col-span-1 lg:col-auto">
+            {/* VIDEO – agora ocupa mais espaço em telas maiores */}
+            <div className="bg-white p-7 rounded-2xl shadow-lg border border-gray-100 col-span-full md:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3 mb-5">
                 <Video className="text-indigo-600" size={32} strokeWidth={2} />
                 <h3 className="text-2xl font-bold text-gray-900">

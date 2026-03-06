@@ -1,125 +1,70 @@
 "use client";
 
 import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import {
   ArrowRight,
   Atom,
   ChevronUp,
-  FileText,
-  Globe,
   Heart,
-  Home,
-  Info,
-  Lightbulb,
-  Mail,
-  MessageCircle,
-  Monitor,
-  Package,
+  Instagram,
   Phone,
   Star,
   Target,
-  X,
   Zap,
-  Instagram,
+  Menu,
+  X,
+  Lightbulb,
+  Users,
+  TestTube,
+  Rocket,
 } from "lucide-react";
-import dynamic from "next/dynamic";
-import React, { ReactNode, useEffect, useState } from "react";
-
-const Typewriter = dynamic(() => import("react-typewriter-effect"), {
-  ssr: false,
-});
-
-// Interfaces e Types
-interface SidebarItem {
-  id?: string;
-  label: string;
-  icon: ReactNode;
-  url?: string;
-}
-
-interface Benefit {
-  icon: ReactNode;
-  text: string;
-}
-
-interface VisibilityState {
-  [key: string]: boolean;
-}
-
-type SectionId = "hero" | "intro" | "benefits" | "contact";
+import React, { useEffect, useRef, useState } from "react";
 
 const AboutPage: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<SectionId>("hero");
-  const [isVisible, setIsVisible] = useState<VisibilityState>({});
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Efeito para detectar scroll
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
-      setShowScrollButton(window.scrollY > 200);
+      setShowScrollButton(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Efeito para observar seções visíveis
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-          setIsVisible((prev) => ({
-            ...prev,
-            [entry.target.id]: entry.isIntersecting,
-          }));
-
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id as SectionId);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    const sections = document.querySelectorAll("[id]");
-    sections.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const sidebarItems: SidebarItem[] = [
-    { id: "hero", label: "Início", icon: <Home className="w-5 h-5" /> },
-    { id: "intro", label: "Sobre Nós", icon: <Info className="w-5 h-5" /> },
-    {
-      url: "/nossos-kits",
-      label: "Nossos Kits",
-      icon: <Package className="w-5 h-5" />,
-    },
-    // {
-    //   url: "/nossos-produtos",
-    //   label: "Produtos",
-    //   icon: <Lightbulb className="w-5 h-5" />,
-    // },
-    {
-      url: "/materiais",
-      label: "Materiais",
-      icon: <FileText className="w-5 h-5" />,
-    },
-    { id: "benefits", label: "Benefícios", icon: <Star className="w-5 h-5" /> },
-    {
-      id: "contact",
-      label: "Contato",
-      icon: <MessageCircle className="w-5 h-5" />,
-    },
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setMenuOpen(false);
+    }
+  };
+
+  const navItems = [
+    { label: "Início", id: "hero" },
+    { label: "Sobre", id: "sobre" },
+    { label: "Benefícios", id: "benefícios" },
+    { label: "Contato", id: "contato" },
   ];
 
-  const benefits: Benefit[] = [
+  const benefits = [
     {
       icon: <Zap className="w-6 h-6" />,
       text: "Aumento do engajamento dos alunos nas aulas de Ciências e Física",
@@ -138,389 +83,526 @@ const AboutPage: React.FC = () => {
     },
   ];
 
-  const scrollToSection = (sectionId: string): void => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setSidebarOpen(false);
-    }
-  };
+  const earlyStageHighlights = [
+    {
+      icon: <TestTube className="w-8 h-8" />,
+      title: "Em desenvolvimento avançado",
+      desc: "Kits finalizados com materiais acessíveis, seguros e prontos para o dia a dia da sala de aula.",
+    },
+    {
+      icon: <Lightbulb className="w-8 h-8" />,
+      title: "Conceitos quânticos simplificados",
+      desc: "Transformando temas complexos em experimentos visuais, táteis e fáceis de entender.",
+    },
+    {
+      icon: <Rocket className="w-8 h-8" />,
+      title: "Alinhado à realidade brasileira",
+      desc: "Desenhado para escolas públicas e privadas, sem necessidade de laboratório caro.",
+    },
+    {
+      icon: <Users className="w-8 h-8" />,
+      title: "Pronto para os primeiros testes",
+      desc: "Buscamos escolas parceiras para validar e aprimorar juntos o impacto real.",
+    },
+  ];
 
-  const handleSidebarToggle = (): void => {
-    setSidebarOpen((prev) => !prev);
-  };
+  const words = [
+    "Física Quântica",
+    "Educação Científica",
+    "Simulações Interativas",
+    "Experimentos Educacionais",
+    "Tecnologia para Aprender",
+  ];
 
-  const handleOverlayClick = (): void => {
-    setSidebarOpen(false);
-  };
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-x-hidden">
-      {/* Sidebar */}
-      <aside
-        className={`fixed left-0 top-0 h-full bg-slate-800/95 backdrop-blur-md shadow-2xl z-50 transition-transform duration-300 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } w-80 lg:translate-x-0 lg:w-64`}
-        aria-label="Menu de navegação lateral"
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] relative overflow-x-hidden">
+      {/* Header Glassmorphism */}
+      <motion.header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-white/70 backdrop-blur-xl shadow-sm border-b border-white/20"
+            : "bg-transparent"
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
       >
-        <div className="p-6 border-b border-slate-700">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-xl">
-                <Atom className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Fotoquantum
-              </span>
+        <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-[#0F172A] p-2 rounded-lg">
+              <img
+                src="/LogoFotoQuantum_branco.png"
+                alt="Logo Fotoquantum"
+                className="h-10 md:h-12 w-auto"
+              />
             </div>
-            <button
-              onClick={handleSidebarToggle}
-              className="lg:hidden p-2 hover:bg-slate-700 rounded-lg transition-colors"
-              aria-label="Fechar menu lateral"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
-        </div>
 
-        <nav className="p-6" aria-label="Navegação principal">
-          <ul className="space-y-2">
-            {sidebarItems.map((item: SidebarItem) => {
-              const isHighlighted =
-                item.label === "Início" ||
-                item.label === "Sobre Nós" ||
-                item.label === "Benefícios" ||
-                item.label === "Contato" ||
-                item.label === "Nossos Kits" ||
-                item.label === "Produtos" ||
-                item.label === "Materiais" ||
-                item.label === "Demonstrações";
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-10">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="relative text-lg font-medium group"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-[#38BDF8] group-hover:w-full group-hover:left-0 transition-all duration-400 origin-center" />
+              </button>
+            ))}
+            <a href="/materiais" className="relative text-lg font-medium group">
+              Materiais
+              <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-[#38BDF8] group-hover:w-full group-hover:left-0 transition-all duration-400 origin-center" />
+            </a>
+          </div>
 
-              return (
-                <li key={item.id || item.url} className="relative group">
-                  {item.id ? (
-                    <button
-                      onClick={() => scrollToSection(item.id!)}
-                      className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer text-gray-300 transition-colors duration-300 relative"
-                      aria-label={`Navegar para ${item.label}`}
-                      aria-current={
-                        activeSection === item.id ? "page" : undefined
-                      }
-                    >
-                      {item.icon}
-                      <span className="font-medium relative">
-                        {item.label}
-                        {isHighlighted && (
-                          <span className="absolute bottom-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300 origin-left" />
-                        )}
-                      </span>
-                    </button>
-                  ) : (
-                    <a
-                      href={item.url}
-                      className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer text-gray-300 transition-colors duration-300 relative group"
-                      onClick={() => setSidebarOpen(false)}
-                    >
-                      {item.icon}
-                      <span className="font-medium relative">
-                        {item.label}
-                        {isHighlighted && (
-                          <span className="absolute bottom-0 left-0 h-[2px] bg-white w-0 group-hover:w-full transition-all duration-300 origin-left" />
-                        )}
-                      </span>
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100/80 transition-colors"
+          >
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </nav>
-      </aside>
 
-      {/* Sidebar Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={handleOverlayClick}
-          aria-hidden="true"
-        />
-      )}
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <motion.div
+            className="md:hidden absolute top-20 inset-x-0 bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-xl"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="p-6 space-y-4">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="block w-full text-left py-3 px-4 text-lg font-medium hover:bg-blue-50 rounded-xl transition-colors"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <a
+                href="/materiais"
+                className="block py-3 px-4 text-lg font-medium hover:bg-blue-50 rounded-xl transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Materiais
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </motion.header>
 
-      {/* Scroll to Top Button */}
-      <button
-        className={`fixed bottom-24 right-8 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 mb-2 ${
+      {/* Scroll to Top */}
+      <motion.button
+        className={`fixed bottom-8 right-8 z-50 bg-[#2563EB] text-white p-4 rounded-full shadow-2xl hover:bg-[#1e40af] transition-colors ${
           showScrollButton ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={scrollToTop}
-        aria-label="Voltar ao topo"
+        whileHover={{ scale: 1.15 }}
+        whileTap={{ scale: 0.9 }}
       >
-        <ChevronUp size={32} />
-      </button>
+        <ChevronUp size={28} />
+      </motion.button>
 
-      {/* Main Content */}
-      <main className="lg:ml-64 transition-all duration-300">
-        {/* Hero Section */}
+      <main className="pt-20">
+        {/* Hero - Cinematográfico */}
         <section
           id="hero"
+          ref={heroRef}
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
-          aria-labelledby="hero-heading"
         >
-          {/* Background Image with Harvard-style Overlay and Opacity */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url('/ft.jpg'), linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(79, 70, 229, 0.1))`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              opacity: 0.2,
-              filter: "blur(1px)",
-            }}
-          ></div>
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-[url('/ft.jpg')] bg-cover bg-center opacity-15" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 via-transparent to-[#7C3AED]/10" />
 
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/20 to-purple-900/20"></div>
+            <motion.div
+              className="absolute top-1/3 left-1/4 w-[700px] h-[700px] bg-[#38BDF8]/20 rounded-full blur-3xl"
+              animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute bottom-1/4 right-1/4 w-[900px] h-[900px] bg-[#7C3AED]/15 rounded-full blur-3xl"
+              animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.6, 0.3] }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 4,
+              }}
+            />
+          </div>
 
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div
-              className={`transition-all duration-1000 ${
-                isVisible.hero
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
+          <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.3 }}
             >
-              <div className="mb-8 relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                <img
-                  src="/LogoFotoQuantum_branco.png"
-                  alt="Logo Fotoquantum"
-                  className="mx-auto h-20 w-auto relative z-10"
-                />
-              </div>
-              <h1
-                id="hero-heading"
-                className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-              >
-                <Typewriter
-                  text="Explore a Física Quântica"
-                  typeSpeed={50}
-                  cursorColor="#a855f7"
-                  hideCursorAfterText={true}
-                  textStyle={{
-                    background: "linear-gradient(to right, #60a5fa, #a855f7)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                    display: "inline-block",
-                  }}
-                />
+              <img
+                src="/LogoFotoQuantum_branco.png"
+                alt="Logo Fotoquantum"
+                className="mx-auto h-28 md:h-36 w-auto mb-10 drop-shadow-2xl"
+              />
+
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-8 tracking-tight text-center">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={words[index]}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -40 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className="bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#2563EB] bg-clip-text text-transparent bg-[length:200%] animate-gradient"
+                  >
+                    {words[index]}
+                  </motion.span>
+                </AnimatePresence>
               </h1>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
-                Kits educacionais revolucionários que tornam os fenômenos
-                quânticos tangíveis e compreensíveis para estudantes e
-                professores.
-              </p>
-              <a
+
+              <motion.p
+                className="text-xl md:text-2xl text-[#475569] max-w-3xl mx-auto leading-relaxed mb-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                Kits educacionais que tornam a física quântica tangível, prática
+                e fascinante.
+              </motion.p>
+
+              <motion.a
                 href="/nossos-kits"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl inline-block"
-                aria-label="Ver nossos kits"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white px-10 py-5 rounded-full text-xl font-semibold shadow-xl hover:shadow-2xl transition-all group relative overflow-hidden"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.97 }}
               >
-                Descobrir Kits
-              </a>
-            </div>
+                <span className="relative z-10">Descobrir Kits</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-[#7C3AED] to-[#2563EB]"
+                  initial={{ x: "100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.4 }}
+                />
+              </motion.a>
+            </motion.div>
           </div>
+
+          <motion.div
+            className="absolute bottom-10 left-1/2 -translate-x-1/2"
+            animate={{ y: [0, 15, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="w-7 h-12 border-2 border-[#475569]/40 rounded-full flex justify-center pt-2">
+              <div className="w-1.5 h-3 bg-[#2563EB] rounded-full" />
+            </div>
+          </motion.div>
         </section>
 
-        {/* Company Introduction */}
+        {/* Sobre */}
         <section
-          id="intro"
-          className="relative py-20 bg-slate-800/30"
-          aria-labelledby="intro-heading"
+          id="sobre"
+          className="relative py-32 bg-[#E2E8F0]/70 overflow-hidden"
         >
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div
-                className={`transition-all duration-1000 delay-200 ${
-                  isVisible.intro
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 -translate-x-10"
-                }`}
+          <motion.div
+            style={{ y: y1 }}
+            className="absolute inset-0 pointer-events-none"
+          >
+            <div className="absolute top-20 left-10 w-80 h-80 bg-[#38BDF8]/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-40 right-20 w-[500px] h-[500px] bg-[#7C3AED]/10 rounded-full blur-3xl" />
+          </motion.div>
+
+          <div className="relative max-w-7xl mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -80 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
               >
-                <h2
-                  id="intro-heading"
-                  className="text-4xl font-bold text-white mb-6"
-                >
-                  Apresentação da Empresa
+                <h2 className="text-5xl md:text-6xl font-bold mb-10">
+                  Apresentação da{" "}
+                  <span className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent">
+                    Empresa
+                  </span>
                 </h2>
-                <p className="text-lg text-gray-300 leading-relaxed mb-8">
-                  Somos uma empresa dedicada à criação de{" "}
-                  <strong className="text-blue-400">
-                    kits educacionais interativos voltados para o ensino de
-                    Física
-                  </strong>
-                  , com foco em tornar o aprendizado mais acessível, prático e
-                  significativo para estudantes do ensino fundamental e médio.
+                <p className="text-lg leading-relaxed text-[#475569] mb-8">
+                  Somos especializados na criação de kits educacionais
+                  interativos para o ensino de Física, com foco em tornar o
+                  aprendizado mais acessível, prático e memorável para alunos do
+                  ensino fundamental e médio.
                 </p>
-                <p className="text-lg text-gray-300 leading-relaxed">
-                  Desenvolvemos soluções que transformam conceitos abstratos em
-                  experiências visuais e táteis, facilitando a compreensão por
-                  meio da experimentação.
+                <p className="text-lg leading-relaxed text-[#475569]">
+                  Transformamos conceitos abstratos em experiências concretas,
+                  visuais e táteis — promovendo a experimentação como ponte
+                  entre teoria e realidade.
                 </p>
-              </div>
-              <div
-                className={`transition-all duration-1000 delay-400 ${
-                  isVisible.intro
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-10"
-                }`}
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 80 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="relative group"
               >
-                <div
-                  className="relative p-8 rounded-3xl text-white"
-                  style={{
-                    backgroundImage: `url('/pk.jpg'), linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(79, 70, 229, 0.1))`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    opacity: 1,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/80 to-purple-600/80 rounded-3xl"></div>
-                  <div className="relative z-10">
-                    <Atom className="w-16 h-16 mb-6 opacity-80" />
-                    <h3 className="text-2xl font-bold mb-4">Nossa Missão</h3>
-                    <p className="text-lg leading-relaxed">
-                      <strong>Tornar a Física mais simples e clara</strong>,
-                      desmistificando conteúdos que costumam parecer complexos e
-                      distantes da realidade dos alunos. Acreditamos que, ao
-                      aproximar a teoria da prática, despertamos o interesse e
-                      promovemos um aprendizado mais eficiente e duradouro.
-                    </p>
-                  </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/30 to-[#7C3AED]/30 rounded-3xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
+                <div className="relative bg-white/80 backdrop-blur-xl p-10 rounded-3xl border border-white/30 shadow-2xl">
+                  <Atom className="w-20 h-20 text-[#2563EB] mb-8 opacity-90" />
+                  <h3 className="text-4xl font-bold mb-6">Nossa Missão</h3>
+                  <p className="text-lg leading-relaxed text-[#475569]">
+                    <strong className="text-[#2563EB]">
+                      Simplificar e desmistificar a Física
+                    </strong>{" "}
+                    — aproximando teoria e prática para despertar curiosidade,
+                    melhorar a retenção e transformar a forma como os alunos
+                    enxergam a ciência.
+                  </p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Benefits */}
-        <section
-          id="benefits"
-          className="py-20 bg-slate-800/30"
-          aria-labelledby="benefits-heading"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2
-                id="benefits-heading"
-                className="text-4xl font-bold text-white mb-4"
-              >
-                Benefícios para sua Instituição
+        {/* Nova seção ajustada: Estamos Construindo... */}
+        <section className="py-24 bg-gradient-to-br from-white to-[#E0F2FE]/50">
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Estamos Construindo o{" "}
+                <span className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent">
+                  Futuro da Educação Científica
+                </span>
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Veja como nossos kits podem transformar o ensino em sua escola
+              <p className="text-xl text-[#475569] max-w-3xl mx-auto">
+                Os kits Fotoquantum estão em fase final de criação. Projetados
+                para resolver problemas reais das salas de aula brasileiras,
+                aguardamos os primeiros parceiros para testes e aprimoramentos
+                juntos.
               </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {earlyStageHighlights.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: i * 0.15 }}
+                  whileHover={{ scale: 1.05, y: -6 }}
+                  className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl border border-gray-100 shadow-lg text-center group"
+                >
+                  <div className="bg-gradient-to-br from-[#2563EB]/10 to-[#7C3AED]/10 p-5 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center group-hover:from-[#2563EB]/20 group-hover:to-[#7C3AED]/20 transition-all">
+                    {React.cloneElement(item.icon, {
+                      className: "text-[#2563EB]",
+                    })}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-[#0F172A]">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#475569] leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
+
+            {/* CTA sutil no final da seção */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mt-16"
+            >
+              <p className="text-lg text-[#475569] mb-6">
+                Interessado em ser um dos primeiros a testar e moldar esses
+                kits?
+              </p>
+              <motion.a
+                href="#contato"
+                className="inline-flex items-center gap-3 bg-[#2563EB] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#1e40af] transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Quero participar dos testes
+                <ArrowRight className="w-5 h-5" />
+              </motion.a>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Benefícios */}
+        <section id="benefícios" className="relative py-32 bg-[#F8FAFC]">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-20"
+            >
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                Benefícios para sua{" "}
+                <span className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent">
+                  Instituição
+                </span>
+              </h2>
+              <p className="text-xl text-[#475569] max-w-3xl mx-auto">
+                Veja como nossos kits podem revolucionar o ensino de ciências na
+                sua escola
+              </p>
+            </motion.div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {benefits.map((benefit: Benefit, index: number) => (
-                <div
-                  key={index}
-                  className={`transition-all duration-700 delay-${
-                    index * 150
-                  } ${
-                    isVisible.benefits
-                      ? "opacity-100 translate-x-0"
-                      : "opacity-0 -translate-x-10"
-                  }`}
+              {benefits.map((benefit, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: i * 0.15 }}
+                  whileHover={{ scale: 1.03, y: -8 }}
+                  className="group relative"
                 >
-                  <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-xl hover:from-indigo-900/40 hover:to-purple-900/40 transition-all duration-300">
-                    <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-3 rounded-lg text-white flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 to-[#7C3AED]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative bg-white/85 backdrop-blur-lg p-8 rounded-2xl border border-white/30 shadow-lg hover:shadow-2xl transition-all">
+                    <div className="bg-gradient-to-br from-[#2563EB] to-[#7C3AED] p-4 rounded-xl text-white inline-block mb-6">
                       {benefit.icon}
                     </div>
-                    <p className="text-gray-300 font-medium">{benefit.text}</p>
+                    <p className="text-lg font-medium text-[#0F172A]">
+                      {benefit.text}
+                    </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Next Steps & Contact */}
+        {/* Contato */}
         <section
-          id="contact"
-          className="py-20 bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
-          aria-labelledby="contact-heading"
+          id="contato"
+          className="relative py-32 overflow-hidden text-white"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div
-              className={`transition-all duration-1000 ${
-                isVisible.contact
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#7C3AED]"
+            animate={{
+              backgroundPosition: ["0% 50%", "200% 50%", "0% 50%"],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+            style={{ backgroundSize: "400% 400%" }}
+          />
+
+          <div className="relative max-w-6xl mx-auto px-6 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
             >
-              <h2 id="contact-heading" className="text-4xl font-bold mb-6">
+              <h2 className="text-5xl md:text-6xl font-bold mb-10">
                 Próximos Passos
               </h2>
-              <p className="text-xl mb-12 max-w-4xl mx-auto leading-relaxed">
-                Estamos à disposição para agendar uma apresentação demonstrativa
-                dos nossos kits, discutir as necessidades da sua instituição e
-                elaborar um orçamento personalizado.
+              <p className="text-xl max-w-4xl mx-auto leading-relaxed mb-16 opacity-95">
+                Agende uma demonstração personalizada dos nossos kits, converse
+                sobre as necessidades da sua escola e receba um orçamento sob
+                medida.
               </p>
 
-              <div className="grid md:grid-cols-2 gap-8 mb-12">
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
-                  <Instagram className="w-8 h-8 mx-auto mb-4" />
-                  <p className="font-medium mb-2">Instagram</p>
-                  <a
-                    href="https://www.instagram.com/fotoquantumkits/"
-                    className="text-indigo-100 hover:underline"
-                    aria-label="Enviar mensagem para  contato@Fotoquantum.com.br"
-                  >
-                    fotoquantumkits
-                  </a>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl hover:bg-white/20 transition-all duration-300">
-                  <Phone className="w-8 h-8 mx-auto mb-4" />
-                  <p className="font-medium mb-2">Telefone</p>
-                  <a
-                    href="tel:+5585984372867"
-                    className="text-indigo-100 hover:underline"
-                    aria-label="Ligar para (85) 98437-2867"
-                  >
-                    (85) 98807-2122
-                  </a>
-                </div>
+              <div className="grid md:grid-cols-2 gap-10 mb-16">
+                <motion.a
+                  href="https://www.instagram.com/fotoquantumkits/"
+                  target="_blank"
+                  className="group"
+                  whileHover={{ scale: 1.04 }}
+                >
+                  <div className="bg-white/15 backdrop-blur-xl p-10 rounded-3xl border border-white/20 hover:bg-white/25 transition-all">
+                    <Instagram className="w-16 h-16 mx-auto mb-6" />
+                    <p className="text-2xl font-semibold mb-2">Instagram</p>
+                    <p className="text-white/90">@fotoquantumkits</p>
+                  </div>
+                </motion.a>
+
+                <motion.a
+                  href="tel:+5585988072122"
+                  className="group"
+                  whileHover={{ scale: 1.04 }}
+                >
+                  <div className="bg-white/15 backdrop-blur-xl p-10 rounded-3xl border border-white/20 hover:bg-white/25 transition-all">
+                    <Phone className="w-16 h-16 mx-auto mb-6" />
+                    <p className="text-2xl font-semibold mb-2">Telefone</p>
+                    <p className="text-white/90">(85) 98807-2122</p>
+                  </div>
+                </motion.a>
               </div>
 
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 inline-flex items-center space-x-2 hover:scale-105"
-                aria-label="Solicitar demonstração dos kits"
+              <motion.button
+                onClick={() => scrollToSection("contato")}
+                className="bg-white text-[#2563EB] px-12 py-6 rounded-full text-xl font-bold hover:bg-gray-100 transition-all inline-flex items-center gap-3 shadow-xl"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.96 }}
               >
-                <span>Solicitar Demonstração</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
+                Solicitar Demonstração
+                <ArrowRight className="w-6 h-6" />
+              </motion.button>
+            </motion.div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="bg-slate-900 text-white py-12" aria-label="Rodapé">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="flex items-center justify-center space-x-3 mb-6">
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-xl">
-                <Atom className="w-6 h-6 text-white" />
+        <footer className="bg-[#0F172A] text-white/90 py-16">
+          <div className="max-w-7xl mx-auto px-6 text-center md:text-left">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="flex items-center gap-4">
+                <div className="bg-gradient-to-br from-[#2563EB] to-[#7C3AED] p-3 rounded-xl">
+                  <Atom className="w-7 h-7 text-white" />
+                </div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent">
+                  Fotoquantum
+                </span>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Fotoquantum
-              </span>
+              <p className="text-gray-400">
+                Transformando o ensino de Física através da experimentação
+                prática e envolvente
+              </p>
             </div>
-            <p className="text-gray-400">
-              Transformando o ensino de Física através da experimentação prática
-            </p>
           </div>
         </footer>
       </main>
+
+      <style jsx global>{`
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        .animate-gradient {
+          animation: gradient 8s ease infinite;
+          background-size: 200% 200%;
+        }
+      `}</style>
     </div>
   );
 };
