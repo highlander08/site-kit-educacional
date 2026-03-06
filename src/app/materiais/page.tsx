@@ -192,6 +192,7 @@ const TeacherSupportPage = () => {
   const [secaoAtiva, setSecaoAtiva] = useState<"professor" | "aluno">(
     "professor"
   );
+  const [reloadKey, setReloadKey] = useState(0);
 
   const playVideo = (url: string) => {
     setSelectedVideo(url);
@@ -202,11 +203,10 @@ const TeacherSupportPage = () => {
   };
 
   const handleTemaChange = (tema: typeof temasData.corpoNegro) => {
-    console.log(` outro ne - Mudando para o tema: ${tema.nome}`);
     setIsLoading(true);
     setTemaAtivo(tema);
+    setReloadKey((prev) => prev + 1);
 
-    // Simula um pequeno carregamento para transição suave
     setTimeout(() => {
       setIsLoading(false);
     }, 300);
@@ -383,7 +383,7 @@ const TeacherSupportPage = () => {
             </motion.div>
           ) : (
             <motion.div
-              key={temaAtivo.id}
+              key={reloadKey}
               initial="hidden"
               animate="visible"
               exit="exit"
