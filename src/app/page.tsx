@@ -111,11 +111,6 @@ const AboutPage: React.FC = () => {
       label: "Materiais",
       icon: <FileText className="w-5 h-5" />,
     },
-    {
-      url: "/demonstracoes",
-      label: "Demonstrações",
-      icon: <Monitor className="w-5 h-5" />,
-    },
     { id: "benefits", label: "Benefícios", icon: <Star className="w-5 h-5" /> },
     {
       id: "contact",
