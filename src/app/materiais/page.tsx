@@ -4,18 +4,16 @@
 import { BackToHome } from "@/components/BackToHome";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Download,
-  FileText,
-  Video,
-  Presentation,
-  BookOpen,
-  GraduationCap,
   Atom,
-  Zap,
-  Sun,
+  BookOpen,
   Cat,
-  Split,
+  Download,
   ExternalLink,
+  FileText,
+  Split,
+  Sun,
+  Video,
+  Zap,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -204,6 +202,7 @@ const TeacherSupportPage = () => {
   };
 
   const handleTemaChange = (tema: typeof temasData.corpoNegro) => {
+    console.log(` outro ne - Mudando para o tema: ${tema.nome}`);
     setIsLoading(true);
     setTemaAtivo(tema);
 
@@ -298,7 +297,10 @@ const TeacherSupportPage = () => {
               return (
                 <motion.button
                   key={tema.id}
-                  onClick={() => handleTemaChange(tema)}
+                  onClick={() => {
+                    console.log(`Tema selecionado: ${tema.nome}`);
+                    handleTemaChange(tema);
+                  }}
                   className={`
                     px-6 py-3 rounded-full font-medium text-white
                     transition-all duration-300 transform flex items-center gap-2
@@ -381,7 +383,7 @@ const TeacherSupportPage = () => {
             </motion.div>
           ) : (
             <motion.div
-              key={`${secaoAtiva}-${temaAtivo.id}`}
+              key={temaAtivo.id}
               initial="hidden"
               animate="visible"
               exit="exit"
