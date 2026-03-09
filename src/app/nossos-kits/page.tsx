@@ -41,19 +41,17 @@ export default function KitsPage() {
     {
       id: 1,
       title: "Kit Corpo Negro",
-      image:
-        "https://static.mundoeducacao.uol.com.br/mundoeducacao/2020/12/experimento-efeito-fotoeletrico.jpg", // Placeholder - troque pela sua foto real
+      image: "/cn.jpeg", // Placeholder - troque pela sua foto real
     },
     {
       id: 2,
       title: "Kit Efeito Fotoelétrico",
-      image:
-        "https://www.xciencia.org/wp-content/uploads/2025/12/espectro-atomico-feature.jpg", // Placeholder próximo de demonstração quântica
+      image: "/fe.jpeg", // Placeholder próximo de demonstração quântica
     },
     {
       id: 3,
       title: "Kit Salto Quântico",
-      image: "https://m.media-amazon.com/images/I/61DXebV+vFL._AC_SL1500_.jpg", // Placeholder de kit óptico/física
+      image: "/sq.jpeg", // Placeholder de kit óptico/física
     },
   ];
 
@@ -145,10 +143,27 @@ export default function KitsPage() {
             <div className="text-center">
               <motion.h3
                 key={currentKit.title}
-                className="text-4xl md:text-6xl font-bold mb-10 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                className="text-4xl md:text-6xl font-bold mb-10 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 20, backgroundPosition: "0% 0" }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  backgroundPosition: ["0% 0", "100% 0", "0% 0"], // Loop: vai e volta
+                }}
+                transition={{
+                  opacity: { duration: 0.8 },
+                  y: { duration: 0.8 },
+                  backgroundPosition: {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear",
+                  },
+                }}
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg, #2563EB 0%, #7C3AED 30%, #ffffff 50%, #7C3AED 70%, #2563EB 100%)",
+                  backgroundSize: "200% 100%",
+                }}
               >
                 {currentKit.title}
               </motion.h3>
