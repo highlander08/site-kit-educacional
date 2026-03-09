@@ -393,10 +393,9 @@ const AboutPage: React.FC = () => {
                 </span>
               </h2>
               <p className="text-xl text-[#475569] max-w-3xl mx-auto">
-                Os kits Fotoquantum estão em fase final de criação. Projetados
-                para resolver problemas reais das salas de aula brasileiras,
-                aguardamos os primeiros parceiros para testes e aprimoramentos
-                juntos.
+                Os kits Fotoquantum estão em constante crescimento. Projetados
+                para facilitar a experimentação prática, eles tornam conceitos
+                complexos acessíveis e envolventes.
               </p>
             </motion.div>
 
