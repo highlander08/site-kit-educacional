@@ -12,6 +12,7 @@ import {
   FileText,
   Split,
   Sun,
+  Target,
   Video,
   Zap,
 } from "lucide-react";
@@ -131,7 +132,9 @@ const temasData: Record<string, Tema> = {
   },
 };
 
-const temasLista = Object.values(temasData);
+// NOVA ORDEM: corpo → efeito → salto
+const ordemTemas = ["corpoNegro", "efeitoFotoeletrico", "saltoQuantico"];
+const temasLista = ordemTemas.map((chave) => temasData[chave]);
 
 const simulacoes = [
   {
@@ -151,6 +154,12 @@ const simulacoes = [
     descricao: "Interferência quântica.",
     url: "https://dupla-fenda.vercel.app/",
     icone: Split,
+  },
+  {
+    nome: "Incerteza",
+    descricao: "Princípio da Incerteza de Heisenberg.",
+    url: "https://incerteza.vercel.app/",
+    icone: Target,
   },
 ];
 

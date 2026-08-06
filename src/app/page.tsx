@@ -273,15 +273,19 @@ const AboutPage: React.FC = () => {
                 </AnimatePresence>
               </h1>
 
-              <motion.p
-                className="text-xl md:text-2xl text-[#475569] max-w-3xl mx-auto leading-relaxed mb-12"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7 }}
-              >
-                Kits educacionais que tornam a física quântica tangível, prática
-                e fascinante.
-              </motion.p>
+              <div className="overflow-x-auto">
+                {" "}
+                {/* ← container com rolagem horizontal, se necessário */}
+                <motion.p
+                  className="text-xl md:text-2xl text-[#475569] leading-relaxed mb-12 whitespace-nowrap"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  Kits educacionais que tornam a física quântica tangível,
+                  prática e fascinante.
+                </motion.p>
+              </div>
 
               <motion.a
                 href="/nossos-kits"
