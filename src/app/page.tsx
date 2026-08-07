@@ -6,6 +6,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import { label } from "framer-motion/client";
 import {
   ArrowRight,
   Atom,
@@ -162,6 +163,13 @@ const AboutPage: React.FC = () => {
             ))}
             <a href="/materiais" className="relative text-lg font-medium group">
               Materiais
+              <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-[#38BDF8] group-hover:w-full group-hover:left-0 transition-all duration-400 origin-center" />
+            </a>
+            <a
+              href="/nossos-kits"
+              className="relative text-lg font-medium group"
+            >
+              Nossos Kits
               <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-[#38BDF8] group-hover:w-full group-hover:left-0 transition-all duration-400 origin-center" />
             </a>
           </div>
