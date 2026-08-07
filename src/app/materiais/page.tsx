@@ -68,7 +68,7 @@ const temasData: Record<string, Tema> = {
         titulo: "Vídeo Explicativo – Corpo Negro",
         descricao:
           "Animação e explicação passo a passo da curva de Planck e da quantização da energia.",
-        url: "https://www.youtube.com/embed/5H7mG0PWwaA", // ← substitua pelo link real
+        url: "https://www.youtube.com/embed/vzsRllGhv4E", // ← substitua pelo link real
       },
     },
   },
@@ -97,7 +97,7 @@ const temasData: Record<string, Tema> = {
         titulo: "Vídeo Explicativo – Salto Quântico",
         descricao:
           "Demonstração visual das transições eletrônicas e da origem das linhas espectrais.",
-        url: "https://www.youtube.com/embed/5H7mG0PWwaA",
+        url: "https://www.youtube.com/embed/vzsRllGhv4E",
       },
     },
   },
@@ -126,7 +126,7 @@ const temasData: Record<string, Tema> = {
         titulo: "Vídeo Explicativo – Efeito Fotoelétrico",
         descricao:
           "Animação do fenômeno + explicação da equação de Einstein e do quantum de luz.",
-        url: "https://www.youtube.com/embed/5H7mG0PWwaA",
+        url: "https://www.youtube.com/embed/vzsRllGhv4E",
       },
     },
   },
